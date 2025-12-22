@@ -7,51 +7,102 @@ import { Menu } from "lucide-react"
 import { useState } from "react"
 import Image from "next/image"
 
-export function Navbar({ config, websiteId }: { config: NavbarConfig; websiteId?: string }) {
+export function Navbar({
+  config,
+  websiteId,
+  website,
+}: {
+  config: NavbarConfig
+  websiteId?: string
+  website: any
+}) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
+  // 🔹 THEME (safe fallback for editor & preview)
+  const theme = website?.colors
+
   return (
-    <nav className="border-border sticky top-0 z-0 border-b bg-background/95 backdrop-blur ssupports-backdrop-filter:bg-background/60">
-      <div className="container  mx-auto flex h-16 items-center justify-between px-4">
+    <nav
+      style={{
+        backgroundColor: theme.primary,
+        color: theme.primary,
+      }}
+      className="sticky top-0 z-50 border-b border-black/10"
+    >
+      <div className="container mx-auto flex h-16 items-center justify-between px-4">
+        {/* LOGO / BRAND */}
         {config.logo ? (
           <Image
             width={48}
             height={48}
             src={config.logo}
             alt={config.brandName || "Logo"}
-           
           />
         ) : (
-          <span className="font-bold text-xl">{config.brandName}</span>
+          <span
+            className="text-xl font-bold tracking-wide"
+            style={{ color: theme.secondary }}
+          >
+            {config.brandName}
+          </span>
         )}
-        {/* Desktop Navigation */}
+
+        {/* DESKTOP NAV */}
         <div className="hidden items-center gap-6 md:flex">
           {config.links?.map((link, index) => (
             <Link
               key={index}
               href={`/render/${websiteId}/${link.pageId}`}
-              className="text-muted-foreground transition-colors hover:text-foreground text-sm font-medium"
+              className="text-sm font-medium transition-colors"
+              style={{ color: theme.secondary }}
+              onMouseEnter={(e) =>
+                (e.currentTarget.style.color = theme.accent)
+              }
+              onMouseLeave={(e) =>
+                (e.currentTarget.style.color = theme.secondary)
+              }
             >
               {link.label}
             </Link>
           ))}
         </div>
 
-        {/* Mobile Menu Button */}
-        <Button variant="ghost" size="icon" className="md:hidden" onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
+        {/* MOBILE TOGGLE (ACTION COLOR) */}
+        <Button
+          size="icon"
+          className="md:hidden"
+          style={{
+            backgroundColor: theme.accent,
+            color: "#ffffff",
+          }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
           <Menu className="h-5 w-5" />
         </Button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* MOBILE MENU */}
       {mobileMenuOpen && (
-        <div className="border-border border-t bg-background md:hidden">
+        <div
+          className="md:hidden"
+          style={{
+            backgroundColor: theme.secondary,
+            borderTop: `1px solid ${theme.primary}20`,
+          }}
+        >
           <div className="container flex flex-col gap-2 p-4">
             {config.links?.map((link, index) => (
               <Link
                 key={index}
                 href={`/render/${websiteId}/${link.pageId}`}
-                className="text-muted-foreground transition-colors hover:text-foreground rounded-lg px-3 py-2 text-sm font-medium"
+                className="rounded-lg px-3 py-2 text-sm font-medium transition-colors"
+                style={{ color: theme.secondary }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = theme.accent)
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "transparent")
+                }
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}

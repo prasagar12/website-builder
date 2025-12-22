@@ -12,17 +12,8 @@ import { StorageManager } from "@/lib/storage"
 import { componentRegistry } from "@/lib/component-registry"
 import type { LayoutBlock, ComponentType, Page, Website } from "@/lib/types"
 import { Button } from "@/components/ui/button"
-import { Eye, Download, Code, ArrowUp, ArrowDown } from "lucide-react"
+import { Eye, Download, Code, ArrowUp, ArrowDown, ArrowLeft } from "lucide-react"
 import Link from "next/link"
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog"
-import { Textarea } from "@/components/ui/textarea"
 import { useToast } from "@/hooks/use-toast"
 
 export default function BuilderPage() {
@@ -39,13 +30,20 @@ export default function BuilderPage() {
 
   useEffect(() => {
     let loadedPage = StorageManager.getPage(websiteId, pageId)
-
     if (!loadedPage) {
       loadedPage = {
         id: pageId,
         name: "Home",
         path: "/",
-        layout: [],
+        layout: [{
+          type: 'HERO',
+          config: {
+            id: LayoutManager.generateId(),
+            title: 'Welcome to Your Website',
+            subtitle: 'This is a hero section. Customize it to make it your own!',
+            showButton: true,
+          }
+        }],
       }
       StorageManager.savePage(websiteId, loadedPage)
     }
@@ -57,6 +55,7 @@ export default function BuilderPage() {
     setWebsite(loadedWebsite)
   }, [websiteId, pageId])
 
+  
   const saveLayout = (newLayout: LayoutBlock[]) => {
     setLayout(newLayout)
     StorageManager.updatePageLayout(websiteId, pageId, newLayout)
@@ -112,25 +111,14 @@ export default function BuilderPage() {
     const draggedItem = newLayout[draggedIndex]
     newLayout.splice(draggedIndex, 1)
     newLayout.splice(index, 0, draggedItem)
-
     setLayout(newLayout)
     setDraggedIndex(index)
   }
-
   const handleDragEnd = () => {
     if (draggedIndex !== null) {
       saveLayout(layout)
     }
     setDraggedIndex(null)
-  }
-
-  const handleExportJSON = () => {
-    const json = LayoutManager.exportLayout(layout)
-    navigator.clipboard.writeText(json)
-    toast({
-      title: "JSON copied",
-      description: "Layout JSON has been copied to clipboard.",
-    })
   }
 
   const selectedBlock = layout.find((b) => b.config.id === selectedBlockId) || null
@@ -141,47 +129,18 @@ export default function BuilderPage() {
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">Page Builder</h1>
           {page && <span className="text-muted-foreground text-sm">/ {page.name}</span>}
+ 
+            <Button variant="outline" size="sm" asChild>
+            <Link href='/' target="_blank">
+              <ArrowLeft className="mr-2 h-3 w-4" />
+              Back
+            </Link>
+          </Button>
+
         </div>
 
         <div className="flex items-center gap-2">
-          {/* {selectedBlockId && (
-            <>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => LayoutManager.moveComponent(layout, selectedBlockId, -1)}
-              >
-                <ArrowUp className="h-4 w-4" />
-              </Button>
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={() => LayoutManager.moveComponent(layout, selectedBlockId, 1)}
-              >
-                <ArrowDown className="h-4 w-4" />
-              </Button>
-            </> */}
-          {/* )} */}
-
-          {/* <Dialog>
-            <DialogTrigger asChild>
-              <Button variant="outline" size="sm">
-                <Code className="mr-2 h-4 w-4" />
-                View JSON
-              </Button>
-            </DialogTrigger>
-            <DialogContent className="max-w-2xl">
-              <DialogHeader>
-                <DialogTitle>Layout JSON</DialogTitle>
-                <DialogDescription>Copy this JSON to use elsewhere or for backup</DialogDescription>
-              </DialogHeader>
-              <Textarea value={LayoutManager.exportLayout(layout)} readOnly rows={15} className="font-mono text-xs" />
-              <Button onClick={handleExportJSON}>
-                <Download className="mr-2 h-4 w-4" />
-                Copy to Clipboard
-              </Button>
-            </DialogContent>
-          </Dialog> */}
+          
 
           <Button size="sm" asChild>
             <Link href={`/preview/${websiteId}/${pageId}`} target="_blank">

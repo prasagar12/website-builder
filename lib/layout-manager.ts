@@ -82,42 +82,29 @@ export class LayoutManager {
 // Sample layout templates
 export const layoutTemplates = {
   landing: [
-    {
-      type: "HERO" as const,
-      config: {
-        id: "hero-1",
-        title: "Welcome to Our Platform",
-        subtitle: "Build amazing websites without code",
-        showButton: true,
-        buttonText: "Get Started",
-      },
+      {
+    type: "NAVBAR",
+    config: {
+      id: "navbar-1",
+      brandName: "MyBrand",
+      links: [
+        { label: "Home", pageId: "home" },
+        { label: "About", pageId: "about" },
+      ],
     },
+  },
     {
-      type: "SERVICE_GRID" as const,
+      type: 'FOOTER',
       config: {
-        id: "services-1",
-        limit: 6,
-        columns: 3 as const,
+        companyName: "My Company",
+        description: "Building amazing digital experiences",
+        showLinks: true,
+        links: [
+          { label: "Home", pageId: "home" },
+          { label: "About", pageId: "about" },
+        ],
       },
-    },
-    {
-      type: "TESTIMONIALS" as const,
-      config: {
-        id: "testimonials-1",
-        limit: 3,
-        autoplay: false,
-      },
-    },
-    {
-      type: "CTA" as const,
-      config: {
-        id: "cta-1",
-        title: "Ready to Get Started?",
-        description: "Join thousands of satisfied customers today",
-        buttonText: "Start Free Trial",
-        variant: "default" as const,
-      },
-    },
+    }
   ],
   about: [
     {

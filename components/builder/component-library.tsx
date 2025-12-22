@@ -13,7 +13,6 @@ interface ComponentLibraryProps {
 
 export function ComponentLibrary({ onAddComponent }: ComponentLibraryProps) {
   const categories = [ "Navigation", "Header", "Content", "E-commerce", "Social Proof", "Forms", "Conversion"]
-
   const componentsByCategory = Object.entries(componentMetadata).reduce(
     (acc, [type, meta]) => {
       if (!acc[meta.category]) {
@@ -33,14 +32,16 @@ export function ComponentLibrary({ onAddComponent }: ComponentLibraryProps) {
       </div>
 
       <Tabs defaultValue="components" className="flex h-full  flex-col">
-        <TabsList className="mx-4 mt-4">
+        {/* <TabsList className="mx-4 mt-4">
           <TabsTrigger value="components" className="flex-1">
             Components
           </TabsTrigger>
           <TabsTrigger value="layout" className="flex-1">
             Layout
           </TabsTrigger>
-        </TabsList>
+        </TabsList> */}
+
+  
 
         <TabsContent value="components" className="flex-1 overflow-auto p-2 space-y-6 mt-0">
           {categories.map(
@@ -75,7 +76,7 @@ export function ComponentLibrary({ onAddComponent }: ComponentLibraryProps) {
           )}
         </TabsContent>
 
-        <TabsContent value="layout" className="flex-1 overflow-auto p-4 mt-0">
+        {/* <TabsContent value="layout" className="flex-1 overflow-auto p-4 mt-0">
           <div>
             <h3 className="mb-3 text-sm font-medium text-muted-foreground">Spacing</h3>
             <p className="text-xs text-muted-foreground mb-3">
@@ -94,7 +95,7 @@ export function ComponentLibrary({ onAddComponent }: ComponentLibraryProps) {
               </div>
             </div>
           </Card>
-        </TabsContent>
+        </TabsContent> */}
       </Tabs>
     </div>
   )

@@ -7,10 +7,9 @@ import type { Page, Website } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import Link from "next/link"
 import { ArrowLeft, ExternalLink } from "lucide-react"
-import { Navbar } from "@/components/builder/navbar"
-import { Footer } from "@/components/builder/footer"
 
-export default function PreviewPage({ params }: { params: Promise<{ websiteId: string; pageId: string }> }) {
+
+export default function PreviewPage({ params  }: { params: Promise<{ websiteId: string; pageId: string }> }) {
   const { websiteId, pageId } = use(params)
   const [page, setPage] = useState<Page | null>(null)
   const [website, setWebsite] = useState<Website | null>(null)
@@ -24,7 +23,6 @@ export default function PreviewPage({ params }: { params: Promise<{ websiteId: s
       setWebsite(loadedWebsite)
       setLoading(false)
     }
-
     loadPage()
 
     const handleStorageChange = () => {
@@ -64,9 +62,9 @@ export default function PreviewPage({ params }: { params: Promise<{ websiteId: s
     })) || []
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen ">
       <div className="border-border bg-background/95 sticky top-0 z-50 border-b backdrop-blur supports-backdrop-filter:bg-background/60">
-        <div className="container mx-auto flex h-14 items-center justify-between px-4">
+        {/* <div className="container mx-auto flex h-14 items-center justify-between px-4">
           <div className="flex items-center gap-4">
             <Button variant="ghost" size="sm" asChild>
               <Link href={`/builder?website=${websiteId}&page=${pageId}`}>
@@ -86,7 +84,7 @@ export default function PreviewPage({ params }: { params: Promise<{ websiteId: s
               Open Full Site
             </Link>
           </Button>
-        </div>
+        </div> */}
       </div>
 
       {/* <Navbar
@@ -97,7 +95,7 @@ export default function PreviewPage({ params }: { params: Promise<{ websiteId: s
         websiteId={websiteId}
       /> */}
 
-      <PageRenderer layout={page.layout} websiteId={websiteId} />
+      <PageRenderer layout={page.layout} websiteId={websiteId} website={website} />
 {/* 
       <Footer
         config={{

@@ -1,10 +1,11 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { ProductListConfig } from "@/lib/types"
+import type { ProductListConfig, Website } from "@/lib/types"
 import { getApiUrl } from "@/lib/api-endpoints"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
+import Image from "next/image"
 
 interface Product {
   id: string
@@ -14,8 +15,23 @@ interface Product {
   image?: string
 }
 
-export function ProductList({ config, websiteId }: { config: ProductListConfig; websiteId?: string }) {
+export function ProductList({
+  config,
+  websiteId,
+  website,
+}: {
+  config: ProductListConfig
+  websiteId?: string
+  website: Website
+}) {
   const [products, setProducts] = useState<Product[]>([])
+
+  // THEME (same everywhere)
+  const theme = website?.colors || {
+    primary: "#000000",
+    secondary: "#8b5cf6",
+    accent: "#10b981",
+  }
 
   useEffect(() => {
     fetch(getApiUrl("PRODUCT_LIST", websiteId))
@@ -33,50 +49,135 @@ export function ProductList({ config, websiteId }: { config: ProductListConfig; 
       })
   }, [config.limit, websiteId])
 
+  /* ------------------------------------------------------------------ */
+  /* VARIANT 2 – Horizontal list */
+  /* ------------------------------------------------------------------ */
   if (config.layout === "variant-2") {
-    // Variant 2: Compact horizontal list
     return (
-      <section className="py-5">
-        <div className="container mx-auto px-4">
-          <div className="space-y-4">
-            {products.map((product) => (
-              <Card key={product.id} className="transition-shadow hover:shadow-md">
-                <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
-                  <div className="flex-1">
-                    <h3 className="mb-1 text-xl font-bold">{product.name}</h3>
-                    <p className="text-muted-foreground">{product.description}</p>
-                  </div>
-                  <div className="flex items-center gap-4">
-                    {config.showPrice && <p className="text-2xl font-bold">${product.price.toFixed(2)}</p>}
-                    <Button>View Details</Button>
-                  </div>
+      <section
+        className="py-10"
+        style={{ backgroundColor: theme.secondary }}
+      >
+        <div className="container mx-auto px-4 space-y-5">
+          {products.map((product) => (
+            <Card
+              key={product.id}
+              className="transition-all duration-300 hover:-translate-y-1"
+              style={{
+                backgroundColor: "#ffffff",
+                boxShadow: `0 10px 30px -12px ${theme.accent}40`,
+              }}
+            >
+              <div className="flex flex-col gap-4 p-6 md:flex-row md:items-center md:justify-between">
+                <div className="flex-1">
+                  <h3
+                    className="mb-1 text-xl font-semibold"
+                    style={{ color: theme.primary }}
+                  >
+                    {product.name}
+                  </h3>
+
+                  <p
+                    className="text-base"
+                    style={{ color: theme.primary, opacity: 0.8 }}
+                  >
+                    {product.description}
+                  </p>
                 </div>
-              </Card>
-            ))}
-          </div>
+
+                <div className="flex items-center gap-4">
+                  {config.showPrice && (
+                    <p
+                      className="text-2xl font-bold"
+                      style={{ color: theme.accent }}
+                    >
+                      ₹{product.price.toFixed(2)}
+                    </p>
+                  )}
+
+                  <Button
+                    style={{
+                      backgroundColor: theme.accent,
+                      color: "#ffffff",
+                    }}
+                  >
+                    View Details
+                  </Button>
+                </div>
+              </div>
+            </Card>
+          ))}
         </div>
       </section>
     )
   }
 
-  // Variant 1 (default): Grid cards
+  /* ------------------------------------------------------------------ */
+  /* VARIANT 1 – Grid cards (default) */
+  /* ------------------------------------------------------------------ */
   return (
-    <section className="py-5">
+    <section
+      className="py-10"
+      style={{ backgroundColor: theme.secondary }}
+    >
       <div className="container mx-auto px-4">
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           {products.map((product) => (
-            <Card key={product.id} className="flex flex-col">
-              <CardHeader>
-                <CardTitle>{product.name}</CardTitle>
-                <CardDescription>{product.description}</CardDescription>
-              </CardHeader>
-              <CardContent className="flex-1">
-                {config.showPrice && <p className="text-2xl font-bold">₹{product.price.toFixed(2)}</p>}
-              </CardContent>
-              <CardFooter>
-                <Button className="w-full">View Details</Button>
-              </CardFooter>
-            </Card>
+            <div
+              key={product.id}
+              className="flex flex-col transition-all duration-300 hover:-translate-y-1"
+              style={{
+                backgroundColor: "#ffffff",
+                boxShadow: `0 12px 30px -12px ${theme.accent}40`,
+              }}
+            >
+              {/* IMAGE (optional) */}
+              {product.image && (
+                <div className="relative h-48 border bo w-full overflow-hidden rounded-t-lg">
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    fill
+                   
+                  />
+                </div>
+              )}
+
+              <div className="flex flex-1 flex-col p-6">
+                <h3
+                  className="mb-2 text-xl font-semibold"
+                  style={{ color: theme.primary }}
+                >
+                  {product.name}
+                </h3>
+
+                <p
+                  className="mb-4 flex-1 text-base"
+                  style={{ color: theme.primary, opacity: 0.8 }}
+                >
+                  {product.description}
+                </p>
+
+                {config.showPrice && (
+                  <p
+                    className="mb-4 text-2xl font-bold"
+                    style={{ color: theme.accent }}
+                  >
+                    ₹{product.price.toFixed(2)}
+                  </p>
+                )}
+
+                <Button
+                  className="w-full cursor-pointer"
+                  style={{
+                    backgroundColor: theme.accent,
+                    color: "#ffffff",
+                  }}
+                >
+                  View Details
+                </Button>
+              </div>
+            </div>
           ))}
         </div>
       </div>
@@ -84,13 +185,21 @@ export function ProductList({ config, websiteId }: { config: ProductListConfig; 
   )
 }
 
+
 ProductList.craft = {
   displayName: "Product List",
   props: {
     config: {
       limit: 6,
       showPrice: true,
-      layout: "variant-1", // Default layout
+      layout: "variant-1",
+    },
+    website: {
+      colors: {
+        primary: "#000000",
+        secondary: "#8b5cf6",
+        accent: "#10b981",
+      },
     },
   },
   related: {

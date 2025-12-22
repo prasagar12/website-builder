@@ -1,7 +1,7 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import type { StatsConfig } from "@/lib/types"
+import type { StatsConfig, Website } from "@/lib/types"
 import { getApiUrl } from "@/lib/api-endpoints"
 import { TrendingUp, Users, Award, Zap } from "lucide-react"
 
@@ -19,8 +19,22 @@ const iconMap = {
   zap: Zap,
 }
 
-export function Stats({ config, websiteId }: { config: StatsConfig; websiteId?: string }) {
+export function Stats({
+  config,
+  websiteId,
+  website,
+}: {
+  config: StatsConfig
+  websiteId?: string
+  website: Website
+}) {
   const [stats, setStats] = useState<Stat[]>([])
+
+  const theme = website?.colors || {
+    primary: "#000000",
+    secondary: "#f8fafc",
+    accent: "#10b981",
+  }
 
   useEffect(() => {
     fetch(getApiUrl("STATS", websiteId))
@@ -36,19 +50,48 @@ export function Stats({ config, websiteId }: { config: StatsConfig; websiteId?: 
       })
   }, [websiteId])
 
+  /* ---------------- Variant 2 ---------------- */
   if (config.layout === "variant-2") {
-    // Variant 2: Vertical cards with background
     return (
-      <section className="py-16 bg-primary/5">
-        <div className="container  mx-auto px-4">
+      <section
+        className="py-16"
+        style={{ backgroundColor: theme.secondary }}
+      >
+        <div className="container mx-auto px-4">
           <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
             {stats.map((stat) => {
-              const Icon = stat.icon ? iconMap[stat.icon as keyof typeof iconMap] : null
+              const Icon =
+                stat.icon && iconMap[stat.icon as keyof typeof iconMap]
+
               return (
-                <div key={stat.id} className="rounded-xl bg-background p-6 text-center shadow-sm">
-                  {config.showIcons && Icon && <Icon className="mx-auto mb-3 h-10 w-10 text-primary" />}
-                  <p className="mb-2 text-5xl font-bold text-primary">{stat.value}</p>
-                  <p className="text-sm font-medium text-muted-foreground">{stat.label}</p>
+                <div
+                  key={stat.id}
+                  className="rounded-2xl p-6 text-center transition-all"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    boxShadow: `0 20px 40px -18px ${theme.accent}40`,
+                  }}
+                >
+                  {config.showIcons && Icon && (
+                    <Icon
+                      className="mx-auto mb-4 h-10 w-10"
+                      style={{ color: theme.accent }}
+                    />
+                  )}
+
+                  <p
+                    className="mb-1 text-5xl font-bold"
+                    style={{ color: theme.primary }}
+                  >
+                    {stat.value}
+                  </p>
+
+                  <p
+                    className="text-sm font-medium"
+                    style={{ color: theme.primary, opacity: 0.7 }}
+                  >
+                    {stat.label}
+                  </p>
                 </div>
               )
             })}
@@ -58,18 +101,37 @@ export function Stats({ config, websiteId }: { config: StatsConfig; websiteId?: 
     )
   }
 
-  // Variant 1 (default): Simple centered layout
+  /* ---------------- Variant 1 (Default) ---------------- */
   return (
     <section className="py-16">
       <div className="container mx-auto px-4">
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
           {stats.map((stat) => {
-            const Icon = stat.icon ? iconMap[stat.icon as keyof typeof iconMap] : null
+            const Icon =
+              stat.icon && iconMap[stat.icon as keyof typeof iconMap]
+
             return (
               <div key={stat.id} className="text-center">
-                {config.showIcons && Icon && <Icon className="mx-auto mb-3 h-8 w-8 text-primary" />}
-                <p className="mb-1 text-4xl font-bold">{stat.value}</p>
-                <p className="text-sm text-muted-foreground">{stat.label}</p>
+                {config.showIcons && Icon && (
+                  <Icon
+                    className="mx-auto mb-3 h-8 w-8"
+                    style={{ color: theme.accent }}
+                  />
+                )}
+
+                <p
+                  className="mb-1 text-4xl font-bold"
+                  style={{ color: theme.primary }}
+                >
+                  {stat.value}
+                </p>
+
+                <p
+                  className="text-sm"
+                  style={{ color: theme.primary, opacity: 0.65 }}
+                >
+                  {stat.label}
+                </p>
               </div>
             )
           })}
@@ -84,7 +146,7 @@ Stats.craft = {
   props: {
     config: {
       showIcons: true,
-      layout: "variant-1", // Default layout
+      layout: "variant-1",
     },
   },
   related: {

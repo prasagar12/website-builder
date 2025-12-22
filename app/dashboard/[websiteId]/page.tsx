@@ -47,7 +47,7 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
       id: LayoutManager.generateId(),
       name: newPageName,
       path: newPagePath || "/",
-      layout: layoutTemplates[selectedTemplate],
+      layout: layoutTemplates[selectedTemplate] as any,
     }
 
     website.pages.push(newPage)
@@ -142,7 +142,7 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
                       onChange={(e) => setNewPageName(e.target.value)}
                     />
                   </div>
-                  <div className="space-y-2">
+                  {/* <div className="space-y-2">
                     <Label htmlFor="pagePath">Path</Label>
                     <Input
                       id="pagePath"
@@ -150,8 +150,8 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
                       value={newPagePath}
                       onChange={(e) => setNewPagePath(e.target.value)}
                     />
-                  </div>
-                  <div className="space-y-2">
+                  </div> */}
+                  {/* <div className="space-y-2">
                     <Label htmlFor="template">Template</Label>
                     <Select value={selectedTemplate} onValueChange={(v) => setSelectedTemplate(v as any)}>
                       <SelectTrigger id="template">
@@ -163,7 +163,7 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
                         <SelectItem value="services">Services Page</SelectItem>
                       </SelectContent>
                     </Select>
-                  </div>
+                  </div> */}
                 </div>
                 <DialogFooter>
                   <Button variant="outline" onClick={() => setIsDialogOpen(false)}>
@@ -201,7 +201,7 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </CardTitle>
-                <CardDescription>{page.path}</CardDescription>
+                {/* <CardDescription>{page.path}</CardDescription> */}
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground text-sm">{page.layout.length} components</p>

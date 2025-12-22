@@ -6,6 +6,7 @@ import { PageRenderer } from "./page-renderer"
 import type { LayoutBlock } from "@/lib/types"
 import { GripVertical, Trash2 } from "lucide-react"
 import { Button } from "./ui/button"
+import { StorageManager } from "@/lib/storage"
 
 interface LayoutPreviewProps {
   layout: LayoutBlock[]
@@ -28,6 +29,7 @@ export function LayoutPreview({
   onDragEnd,
   onDelete,
 }: LayoutPreviewProps) {
+  const website = websiteId ? StorageManager.getWebsite(websiteId) : null
   return (
     <div className="layout-preview h-full overflow-auto">
       <style jsx global>{`
@@ -97,6 +99,7 @@ export function LayoutPreview({
               e.stopPropagation()
               onSelectBlock?.(block.config.id)
             }}
+
           >
             <div className="drag-handle">
               <Button size="icon" variant="secondary" className="h-8 w-8 cursor-grab active:cursor-grabbing shadow-md">
@@ -118,7 +121,7 @@ export function LayoutPreview({
               </Button>
             </div>
 
-            <PageRenderer layout={[block]} websiteId={websiteId} isPreview />
+            <PageRenderer layout={[block]} websiteId={websiteId} isPreview website={website} />
           </div>
         ))}
       </div>

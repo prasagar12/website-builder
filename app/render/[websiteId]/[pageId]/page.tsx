@@ -4,8 +4,7 @@ import { use, useEffect, useState } from "react"
 import { PageRenderer } from "@/components/page-renderer"
 import { StorageManager } from "@/lib/storage"
 import type { Page, Website } from "@/lib/types"
-import { Navbar } from "@/components/builder/navbar"
-import { Footer } from "@/components/builder/footer"
+
 
 export default function RenderPage({ params }: { params: Promise<{ websiteId: string; pageId: string }> }) {
   const { websiteId, pageId } = use(params)
@@ -44,7 +43,7 @@ export default function RenderPage({ params }: { params: Promise<{ websiteId: st
         websiteId={websiteId}
       /> */}
 
-      <PageRenderer layout={page.layout} websiteId={websiteId} />
+      <PageRenderer layout={page.layout} websiteId={websiteId} website={website} />
 
       {/* <Footer
         config={{
