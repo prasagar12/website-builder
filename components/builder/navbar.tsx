@@ -17,15 +17,18 @@ export function Navbar({
   website: any
 }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-
-  // 🔹 THEME (safe fallback for editor & preview)
+  //🔹THEME (safe fallback for editor & preview)
   const theme = website?.colors
-
+  // console.log(theme)
+   const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
   return (
     <nav
       style={{
         backgroundColor: theme.primary,
         color: theme.primary,
+        fontFamily: font.heading,
       }}
       className="sticky top-0 z-50 border-b border-black/10"
     >
@@ -106,6 +109,7 @@ export function Navbar({
                 onClick={() => setMobileMenuOpen(false)}
               >
                 {link.label}
+            
               </Link>
             ))}
           </div>
@@ -114,7 +118,6 @@ export function Navbar({
     </nav>
   )
 }
-
 Navbar.craft = {
   displayName: "Navigation Bar",
   props: {

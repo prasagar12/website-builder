@@ -32,6 +32,10 @@ export function Testimonials({
     accent: "#10b981",
   }
 
+   const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
   useEffect(() => {
     fetch(getApiUrl("TESTIMONIALS", websiteId))
       .then((res) => res.json())
@@ -60,7 +64,7 @@ export function Testimonials({
         <div className="container mx-auto px-4">
           <h2
             className="mb-12 text-center text-3xl font-bold"
-            style={{ color: theme.primary }}
+            style={{ color: theme.primary , fontFamily: font.heading }}
           >
             What Our Clients Say
           </h2>
@@ -129,7 +133,7 @@ export function Testimonials({
       <div className="container mx-auto px-4">
         <h2
           className="mb-12 text-center text-3xl font-bold"
-          style={{ color: theme.primary }}
+          style={{ color: theme.primary, fontFamily: font.heading }}
         >
           What Our Clients Say
         </h2>

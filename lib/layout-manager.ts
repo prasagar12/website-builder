@@ -40,7 +40,6 @@ export class LayoutManager {
     newLayout.splice(toIndex, 0, removed)
     return newLayout
   }
-
   // Update component config
   static updateComponentConfig(
     layout: LayoutBlock[],
@@ -51,12 +50,10 @@ export class LayoutManager {
       block.config.id === blockId ? { ...block, config: { ...block.config, ...newConfig } } : block,
     )
   }
-
   // Export layout to JSON
   static exportLayout(layout: LayoutBlock[]): string {
     return JSON.stringify(layout, null, 2)
   }
-
   // Import layout from JSON
   static importLayout(json: string): LayoutBlock[] | null {
     try {
@@ -87,22 +84,20 @@ export const layoutTemplates = {
     config: {
       id: "navbar-1",
       brandName: "MyBrand",
-      links: [
-        { label: "Home", pageId: "home" },
-        { label: "About", pageId: "about" },
-      ],
+    
     },
   },
+
+
+    
+
     {
       type: 'FOOTER',
       config: {
         companyName: "My Company",
         description: "Building amazing digital experiences",
         showLinks: true,
-        links: [
-          { label: "Home", pageId: "home" },
-          { label: "About", pageId: "about" },
-        ],
+      
       },
     }
   ],

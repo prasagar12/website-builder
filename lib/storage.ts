@@ -46,7 +46,6 @@ export class StorageManager {
     } else {
       websites.push(website)
     }
-
     this.saveWebsites(websites)
   }
 

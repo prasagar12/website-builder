@@ -22,6 +22,10 @@ export function TextSection({
     accent: "#10b981",    // HIGHLIGHT
   }
 
+  const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
   /* ------------------------------------------------------------------ */
   /* VARIANT 2 – Card / Highlight layout */
   /* ------------------------------------------------------------------ */
@@ -42,7 +46,10 @@ export function TextSection({
             <div className={alignmentClasses[config.alignment || "left"]}>
               <h2
                 className="mb-4 text-3xl font-bold tracking-tight md:text-4xl"
-                style={{ color: theme.primary }}
+                style={{
+                  color: theme.primary,
+                  fontFamily: font.heading
+                }}
               >
                 {config.heading}
               </h2>
@@ -72,7 +79,9 @@ export function TextSection({
         <div className={alignmentClasses[config.alignment || "left"]}>
           <h2
             className="mb-4 text-3xl font-bold tracking-tight md:text-4xl"
-            style={{ color: theme.primary }}
+            style={{ color: theme.primary 
+                , fontFamily: font.heading
+            }}
           >
             {config.heading}
           </h2>

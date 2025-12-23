@@ -26,6 +26,7 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
     )
   }
 
+
   const handleChange = (key: string, value: any) => {
     onUpdate(block.config.id, { [key]: value })
   }
@@ -276,6 +277,7 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
                 value={String((block.config as any).columns || 3)}
                 onValueChange={(value) => handleChange("columns", Number.parseInt(value))}
               >
+               
                 <SelectTrigger id="columns">
                   <SelectValue />
                 </SelectTrigger>

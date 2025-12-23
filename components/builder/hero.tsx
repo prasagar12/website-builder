@@ -21,19 +21,21 @@ export function Hero({
   website: Website
 }) {
   const [data, setData] = useState<HeroData | null>(null)
-
   useEffect(() => {
     fetch(getApiUrl("HERO", websiteId))
       .then((res) => res.json())
       .then(setData)
       .catch(() => setData({}))
   }, [websiteId])
-
   // 🔹 THEME (same contract as Navbar)
   const theme = website?.colors || {
     primary: "#000000",   // TEXT
     secondary: "#8b5cf6", // BACKGROUND
     accent: "#10b981",    // ACTION
+  }
+
+  const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
   }
 
   const buttonHref =
@@ -48,7 +50,11 @@ export function Hero({
     return (
       <section
         className="relative overflow-hidden py-20"
-        style={{ backgroundColor: theme.secondary }}
+        style={{
+          backgroundColor: theme.secondary
+
+
+        }}
       >
         <div className="container mx-auto px-4">
           <div className="grid items-center gap-12 lg:grid-cols-2">
@@ -56,9 +62,12 @@ export function Hero({
             <div>
               <h1
                 className="mb-4 text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl"
-                style={{ color: theme.primary }}
+                style={{
+                  color: theme.primary,
+                  fontFamily: font.heading,
+                }}
               >
-                {config.title || "Build high-quality  engineering effort" }
+                {config.title || "Build high-quality  engineering effort"}
               </h1>
 
               <p
@@ -119,7 +128,8 @@ export function Hero({
     >
       {/* Background Image */}
       {config.image && (
-        <img
+        <Image
+        fill
           src={config.image}
           alt="Hero Background"
           className="absolute inset-0 h-full w-full object-cover"

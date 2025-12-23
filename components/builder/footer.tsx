@@ -18,6 +18,10 @@ export function Footer({
     accent: "#10b981",
   }
 
+  const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
   return (
     <footer
       style={{ backgroundColor: theme.primary }}
@@ -39,6 +43,7 @@ export function Footer({
           </div>
 
           {/* LINKS */}
+          {/* @ts-ignore */}
           {config.showLinks && config?.links?.length > 0 && (
             <div>
               <h4 className="mb-4 text-sm font-semibold text-white">
@@ -46,6 +51,7 @@ export function Footer({
               </h4>
 
               <div className="flex flex-col gap-2">
+              {/* @ts-ignore */}
                 {config?.links.map((link, index) => (
                   <Link
                     key={index}

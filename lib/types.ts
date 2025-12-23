@@ -117,7 +117,13 @@ export interface Website {
     secondary: string
     accent: string
   }
+  fonts?: {
+    // Added font settings
+    heading: string
+    
+  }
   pages: Page[]
+
 }
 
 export interface Page {

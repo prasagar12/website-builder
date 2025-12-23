@@ -30,6 +30,12 @@ export function ServiceGrid({
     accent: "#10b981",
   }
 
+  const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
+
+
   useEffect(() => {
     fetch(getApiUrl("SERVICE_GRID", websiteId))
       .then((res) => res.json())
@@ -51,7 +57,6 @@ export function ServiceGrid({
     3: "md:grid-cols-3",
     4: "md:grid-cols-4",
   }
-
   /* ------------------------------------------------------------------ */
   /* VARIANT 2 – Horizontal list cards */
   /* ------------------------------------------------------------------ */
@@ -75,11 +80,11 @@ export function ServiceGrid({
               <div className="p-6 hover:-translate-y-0.5">
                 <h3
                   className="mb-2 text-xl font-semibold"
-                  style={{ color: theme.primary }}
+                  style={{ color: theme.primary, 
+                    fontFamily: font.heading }}
                 >
                   {service.title}
                 </h3>
-
                 <p
                   className="text-base leading-relaxed"
                   style={{ color: theme.primary, opacity: 0.85 }}

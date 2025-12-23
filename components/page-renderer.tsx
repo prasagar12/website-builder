@@ -8,9 +8,10 @@ interface PageRendererProps {
   websiteId?: string
   isPreview?: boolean
   website: any
+  
 }
 
-export function PageRenderer({ layout, websiteId, isPreview = false, website  }: PageRendererProps) {
+export function PageRenderer({ layout, websiteId, isPreview = false, website    }: PageRendererProps) {
 // console.log(layout,'dddlayout')
   if (!layout || layout.length === 0) {
     return (
@@ -33,13 +34,12 @@ export function PageRenderer({ layout, websiteId, isPreview = false, website  }:
           console.error(`Component type "${block.type}" not found in registry`)
           return (
             <div key={block.config.id} className="border-destructive bg-black border-2 p-8 text-center ">
-              <p className="text-destructive">Component type "{block.type}" not found</p>
+              <p className="text-destructive">Component type "{block.type}"not found</p>
             </div>
           )
         }
-
         return (
-          <div key={block.config.id} data-block-id={block.config.id} data-block-index={index}>
+          <div  key={block.config.id} data-block-id={block.config.id} data-block-index={index}>
             <Component config={block.config} websiteId={websiteId} website={website} />
           </div>
         )

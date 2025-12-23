@@ -21,6 +21,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Plus, Edit, ExternalLink, Trash2, ArrowLeft, Eye } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
+import { PageRenderer } from "@/components/page-renderer"
 
 export default function WebsiteDashboard({ params }: { params: Promise<{ websiteId: string }> }) {
   const { websiteId } = use(params)
@@ -187,10 +188,45 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
 
         <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
           {website.pages.map((page) => (
-            <Card key={page.id}>
-              <CardHeader>
+            // <Card key={page.id}>
+            //   <CardHeader>
+            //     <CardTitle className="flex items-center justify-between">
+            //       <span className="truncate">{page.name}</span>
+            //       <Button
+            //         variant="ghost"
+            //         size="icon"
+            //         onClick={() => handleDeletePage(page.id)}
+            //         className="text-destructive shrink-0"
+            //         disabled={website.pages.length === 1}
+            //       >
+            //         <Trash2 className="h-4 w-4" />
+            //       </Button>
+            //     </CardTitle>
+            //     {/* <CardDescription>{page.path}</CardDescription> */}
+            //   </CardHeader>
+            //   <CardContent>
+            //     <p className="text-muted-foreground text-sm">{page.layout.length} components</p>
+            //   </CardContent>
+            //   <CardFooter className="flex gap-2">
+            //     <Button asChild className="flex-1">
+            //       <Link href={`/builder?website=${websiteId}&page=${page.id}`}>
+            //         <Edit className="mr-2 h-4 w-4" />
+            //         Edit
+            //       </Link>
+            //     </Button>
+            //     <Button asChild variant="outline" size="icon">
+            //       <Link href={`/render/${websiteId}/${page.id}`} target="_blank">
+            //         <ExternalLink className="h-4 w-4" />
+            //       </Link>
+            //     </Button>
+            //   </CardFooter>
+            // </Card>
+            <Card key={page.id} className="flex flex-col">
+              <CardHeader className="space-y-3">
+                {/* TITLE + DELETE */}
                 <CardTitle className="flex items-center justify-between">
                   <span className="truncate">{page.name}</span>
+
                   <Button
                     variant="ghost"
                     size="icon"
@@ -201,25 +237,51 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
                     <Trash2 className="h-4 w-4" />
                   </Button>
                 </CardTitle>
-                {/* <CardDescription>{page.path}</CardDescription> */}
+
+                {/*  INLINE PAGE PREVIEW */}
+                <div className="relative h-24 overflow-hidden rounded-md border bg-background">
+                  <div
+                    className="origin-top-left scale-[0.35]"
+                    style={{
+                      width: "300%",
+                      pointerEvents: "none",
+                    }}
+                  >
+                    <PageRenderer
+                      layout={page.layout}
+                      websiteId={websiteId}
+                      website={website}
+                      isPreview
+                    />
+                  </div>
+
+                  <div className="absolute inset-0 rounded-md ring-1 ring-border" />
+                </div>
               </CardHeader>
-              <CardContent>
-                <p className="text-muted-foreground text-sm">{page.layout.length} components</p>
+
+              <CardContent className="pt-2">
+                <p className="text-muted-foreground text-sm">
+                  {page.layout.length} components
+                </p>
               </CardContent>
+
               <CardFooter className="flex gap-2">
-                <Button asChild className="flex-1">
+                <Button asChild size="sm" className="flex-1">
                   <Link href={`/builder?website=${websiteId}&page=${page.id}`}>
                     <Edit className="mr-2 h-4 w-4" />
                     Edit
                   </Link>
                 </Button>
-                <Button asChild variant="outline" size="icon">
+
+                <Button asChild size="sm" variant="outline">
                   <Link href={`/render/${websiteId}/${page.id}`} target="_blank">
-                    <ExternalLink className="h-4 w-4" />
+                    <Eye className="mr-2 h-4 w-4" />
+                    Preview
                   </Link>
                 </Button>
               </CardFooter>
             </Card>
+
           ))}
         </div>
       </div>

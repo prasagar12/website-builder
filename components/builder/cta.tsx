@@ -19,6 +19,11 @@ export function CTA({
     accent: "#10b981",
   }
 
+
+  const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
   const buttonHref =
     config.buttonLinkType === "page" && config.buttonLink
       ? `/render/${websiteId}/${config.buttonLink}`
@@ -36,7 +41,8 @@ export function CTA({
             <div className="flex-1">
               <h2
                 className="mb-2 text-3xl font-bold tracking-tight"
-                style={{ color: theme.primary }}
+                style={{ color: theme.primary, fontFamily: font.heading }}
+
               >
                 {config.title}
               </h2>

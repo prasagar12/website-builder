@@ -20,6 +20,10 @@ const ContactForm = ({ config, website }: ContactFormProps) => {
     accent: "#10b981",
   }
 
+ const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -51,7 +55,7 @@ const ContactForm = ({ config, website }: ContactFormProps) => {
   return (
     <section
       className="py-16"
-      style={{ backgroundColor: theme.secondary }}
+      style={{ backgroundColor: theme.secondary  }}
     >
       <div className="container mx-auto px-4">
         <div className="grid items-stretch gap-10 lg:grid-cols-2">
@@ -92,7 +96,7 @@ const ContactForm = ({ config, website }: ContactFormProps) => {
 
             <p
               className="mb-8 max-w-md"
-              style={{ color: theme.primary, opacity: 0.7 }}
+              style={{ color: theme.primary, opacity: 0.7  }} 
             >
               {config.description || "We would love to hear from you"}
             </p>

@@ -26,11 +26,33 @@ export default function CreateWebsitePage() {
   const [name, setName] = useState("");
   const [domain, setDomain] = useState("");
   const [dns, setDns] = useState("");
+
   const [colors, setColors] = useState({
-  primary: "#0f172a",  
-  secondary: "#f8fafc",
-  accent: "#10b981",   
-})
+    primary: "#0f172a",
+    secondary: "#f8fafc",
+    accent: "#10b981",
+  })
+
+  const downloadDNSFile = () => {
+    const csvContent = [
+      ["Type", "Host", "Value", "TTL"],
+      ["A", "@", "192.168.1.1", "3600"],
+      ["AAAA", "@", "2404:6800:4009:80b::200e", "3600"],
+    ]
+      .map((row) => row.join(","))
+      .join("\n")
+
+    const blob = new Blob([csvContent], { type: "text/csv;charset=utf-8;" })
+    const url = URL.createObjectURL(blob)
+
+    const link = document.createElement("a")
+    link.href = url
+    link.download = "dns-records.csv"
+    link.click()
+
+    URL.revokeObjectURL(url)
+  }
+
 
   const [fontFamily, setFontFamily] = useState("Inter, system-ui, sans-serif");
 
@@ -47,18 +69,24 @@ export default function CreateWebsitePage() {
     const websiteId = LayoutManager.generateId();
     const homePageId = LayoutManager.generateId();
 
+
+
     const newWebsite: Website = {
       id: websiteId,
       name,
       domain: domain || undefined,
       dns: dns || undefined,
       colors,
+      fonts: {
+        heading: fontFamily,
+      },
+
       pages: [
         {
           id: homePageId,
           name: "Home",
           path: "/",
-          layout: layoutTemplates.landing as any, 
+          layout: layoutTemplates.landing as any,
         },
       ],
     };
@@ -77,7 +105,7 @@ export default function CreateWebsitePage() {
     <div className="min-h-screen bg-background">
       <div className="border-b border-border bg-background">
         <div className="container p-2 mx-auto flex  items-center justify-between px-4">
-         
+
           <Button
             variant="outline"
             className="text-xs cursor-pointer"
@@ -89,7 +117,6 @@ export default function CreateWebsitePage() {
           </Button>
         </div>
       </div>
-
       <div className="container mx-auto px-4 py-6 lg:py-10">
         <div className="grid gap-6 lg:grid-cols-[320px_minmax(0,1fr)] items-start">
           {/* Sidebar settings */}
@@ -116,14 +143,35 @@ export default function CreateWebsitePage() {
                 </div>
                 <div className="space-y-2">
                   <Label htmlFor="domain">Domain</Label>
+
                   <Input
                     id="domain"
                     placeholder="example.com"
                     value={domain}
                     onChange={(e) => setDomain(e.target.value)}
                   />
+
+                  {/* Instructions */}
+                  <p className="text-xs text-muted-foreground leading-relaxed">
+                    Point your domain to the DNS records.{" "}
+                    <button
+                      type="button"
+                      onClick={downloadDNSFile}
+                      className="underline underline-offset-4 hover:text-foreground"
+                    >
+                      Download DNS records
+                    </button>
+                    . If you don’t have a domain,{" "}
+                    <a
+                      href="mailto:info@rapidlinks.org.in"
+                      className="underline underline-offset-4 hover:text-foreground"
+                    >
+                      contact us
+                    </a>
+                    .
+                  </p>
                 </div>
-                <div className="space-y-2">
+                {/* <div className="space-y-2">
                   <Label htmlFor="dns">DNS Settings</Label>
                   <Input
                     id="dns"
@@ -131,7 +179,7 @@ export default function CreateWebsitePage() {
                     value={dns}
                     onChange={(e) => setDns(e.target.value)}
                   />
-                </div>
+                </div> */}
               </div>
 
               <div className="space-y-3">
@@ -153,7 +201,7 @@ export default function CreateWebsitePage() {
                       className="h-10 w-full cursor-pointer"
                     />
                   </div>
-                  <div className="space-y-1">
+                  {/* <div className="space-y-1">
                     <Label htmlFor="secondary" className="text-xs">
                       Secondary
                     </Label>
@@ -166,7 +214,7 @@ export default function CreateWebsitePage() {
                       }
                       className="h-10 w-full cursor-pointer"
                     />
-                  </div>
+                  </div> */}
                   <div className="space-y-1">
                     <Label htmlFor="accent" className="text-xs">
                       Accent
@@ -235,172 +283,172 @@ export default function CreateWebsitePage() {
                 </CardDescription>
               </CardHeader>
 
-       
-       <CardContent>
-  <div
-    className="rounded-xl overflow-hidden border shadow-lg"
-    style={{
-      fontFamily,
-      backgroundColor: colors.secondary,
-      color: colors.primary,
-    }}
-  >
-    {/* ================= NAVBAR ================= */}
-    <header
-      className="flex items-center justify-between px-8 py-4"
-      style={{
-        backgroundColor: colors.primary,
-        color: "#ffffff",
-      }}
-    >
-      <span className="text-sm font-bold tracking-wide">
-        {name || "My Website"}
-      </span>
 
-      <nav className="hidden md:flex gap-6 text-xs opacity-90">
-        <span>Home</span>
-        <span>Services</span>
-        <span>About</span>
-        <span>Contact</span>
-      </nav>
-    </header>
+              <CardContent>
+                <div
+                  className="rounded-xl overflow-hidden border shadow-lg"
+                  style={{
+                    fontFamily,
+                    backgroundColor: colors.secondary,
+                    color: colors.primary,
+                  }}
+                >
+                  {/* ================= NAVBAR ================= */}
+                  <header
+                    className="flex items-center justify-between px-8 py-4"
+                    style={{
+                      backgroundColor: colors.primary,
+                      color: "#ffffff",
+                    }}
+                  >
+                    <span className="text-sm font-bold tracking-wide">
+                      {name || "My Website"}
+                    </span>
 
-    {/* ================= HERO ================= */}
-    <section className="px-10 py-20 space-y-6">
-      <p className="text-[11px] uppercase tracking-[0.35em] opacity-70">
-        Modern Website Platform
-      </p>
+                    <nav className="hidden md:flex gap-6 text-xs opacity-90">
+                      <span>Home</span>
+                      <span>Services</span>
+                      <span>About</span>
+                      <span>Contact</span>
+                    </nav>
+                  </header>
 
-      <h1 className="text-4xl md:text-5xl font-bold leading-tight max-w-2xl">
-        {name || "Build high-quality websites without engineering effort"}
-      </h1>
+                  {/* ================= HERO ================= */}
+                  <section className="px-10 py-20 space-y-6">
+                    <p className="text-[11px] uppercase tracking-[0.35em] opacity-70">
+                      Modern Website Platform
+                    </p>
 
-      <p className="text-sm opacity-80 max-w-xl">
-        {domain
-          ? `Live on ${domain}. Fully customizable, scalable and fast.`
-          : "Design, customize and launch your website using a powerful no-code builder."}
-      </p>
+                    <h1 className="text-4xl md:text-5xl font-bold leading-tight max-w-2xl">
+                      {name || "Build high-quality websites without engineering effort"}
+                    </h1>
 
-      <div className="pt-4">
-        <Button
-          style={{
-            backgroundColor: colors.accent,
-            color: "#ffffff",
-          }}
-        >
-          Get Started
-        </Button>
-      </div>
-    </section>
+                    <p className="text-sm opacity-80 max-w-xl">
+                      {domain
+                        ? `Live on ${domain}. Fully customizable, scalable and fast.`
+                        : "Design, customize and launch your website using a powerful no-code builder."}
+                    </p>
 
-    {/* ================= SERVICES ================= */}
-    <section
-      className="px-10 py-16"
-      style={{ backgroundColor: `${colors.primary}08` }}
-    >
-      <h2 className="text-2xl font-semibold mb-10 text-center">
-        Our Services
-      </h2>
+                    <div className="pt-4">
+                      <Button
+                        style={{
+                          backgroundColor: colors.accent,
+                          color: "#ffffff",
+                        }}
+                      >
+                        Get Started
+                      </Button>
+                    </div>
+                  </section>
 
-      <div className="grid gap-6 md:grid-cols-3 text-sm">
-        {[
-          "Website Design",
-          "Landing Pages",
-          "SEO Optimization",
-          "E-commerce Setup",
-          "Branding",
-          "Maintenance",
-        ].map((service) => (
-          <div
-            key={service}
-            className="rounded-xl p-6 transition"
-            style={{
-              backgroundColor: "#ffffff",
-              border: `1px solid ${colors.primary}15`,
-            }}
-          >
-            <p className="font-semibold mb-2">{service}</p>
-            <p className="opacity-75 text-xs">
-              Professionally designed sections optimized for performance.
-            </p>
-          </div>
-        ))}
-      </div>
-    </section>
+                  {/* ================= SERVICES ================= */}
+                  <section
+                    className="px-10 py-16"
+                    style={{ backgroundColor: `${colors.primary}08` }}
+                  >
+                    <h2 className="text-2xl font-semibold mb-10 text-center">
+                      Our Services
+                    </h2>
 
-    {/* ================= STATS ================= */}
-    <section className="px-10 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-      {[
-        ["10K+", "Websites Built"],
-        ["99.9%", "Uptime"],
-        ["5x", "Faster Launch"],
-        ["24/7", "Support"],
-      ].map(([value, label]) => (
-        <div key={label}>
-          <p className="text-3xl font-bold">{value}</p>
-          <p className="text-xs opacity-70">{label}</p>
-        </div>
-      ))}
-    </section>
+                    <div className="grid gap-6 md:grid-cols-3 text-sm">
+                      {[
+                        "Website Design",
+                        "Landing Pages",
+                        "SEO Optimization",
+                        "E-commerce Setup",
+                        "Branding",
+                        "Maintenance",
+                      ].map((service) => (
+                        <div
+                          key={service}
+                          className="rounded-xl p-6 transition"
+                          style={{
+                            backgroundColor: "#ffffff",
+                            border: `1px solid ${colors.primary}15`,
+                          }}
+                        >
+                          <p className="font-semibold mb-2">{service}</p>
+                          <p className="opacity-75 text-xs">
+                            Professionally designed sections optimized for performance.
+                          </p>
+                        </div>
+                      ))}
+                    </div>
+                  </section>
 
-    {/* ================= CONTACT ================= */}
-    <section
-      className="px-10 py-20"
-      style={{ backgroundColor: `${colors.primary}05` }}
-    >
-      <h2 className="text-2xl font-semibold mb-12 text-center">
-        Contact Us
-      </h2>
+                  {/* ================= STATS ================= */}
+                  <section className="px-10 py-16 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    {[
+                      ["10K+", "Websites Built"],
+                      ["99.9%", "Uptime"],
+                      ["5x", "Faster Launch"],
+                      ["24/7", "Support"],
+                    ].map(([value, label]) => (
+                      <div key={label}>
+                        <p className="text-3xl font-bold">{value}</p>
+                        <p className="text-xs opacity-70">{label}</p>
+                      </div>
+                    ))}
+                  </section>
 
-      <div className="max-w-3xl mx-auto grid gap-10 md:grid-cols-2 items-center">
-        <div className="grid gap-4 text-sm">
-          <Input placeholder="Your name" />
-          <Input placeholder="Email address" />
-          <Input placeholder="Subject" />
-          <textarea
-            className="w-full rounded-lg border px-3 py-2"
-            rows={3}
-            placeholder="Message"
-          />
-          <Button
-            className="w-fit"
-            style={{
-              backgroundColor: colors.accent,
-              color: "#ffffff",
-            }}
-          >
-            Send Message
-          </Button>
-        </div>
+                  {/* ================= CONTACT ================= */}
+                  <section
+                    className="px-10 py-20"
+                    style={{ backgroundColor: `${colors.primary}05` }}
+                  >
+                    <h2 className="text-2xl font-semibold mb-12 text-center">
+                      Contact Us
+                    </h2>
 
-        <div className="relative h-[360px] rounded-2xl overflow-hidden shadow-lg">
-          <img
-            src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
-            alt="Contact"
-            className="h-full w-full object-cover"
-          />
-        </div>
-      </div>
-    </section>
+                    <div className="max-w-3xl mx-auto grid gap-10 md:grid-cols-2 items-center">
+                      <div className="grid gap-4 text-sm">
+                        <Input placeholder="Your name" />
+                        <Input placeholder="Email address" />
+                        <Input placeholder="Subject" />
+                        <textarea
+                          className="w-full rounded-lg border px-3 py-2"
+                          rows={3}
+                          placeholder="Message"
+                        />
+                        <Button
+                          className="w-fit"
+                          style={{
+                            backgroundColor: colors.accent,
+                            color: "#ffffff",
+                          }}
+                        >
+                          Send Message
+                        </Button>
+                      </div>
 
-    {/* ================= FOOTER ================= */}
-    <footer
-      className="px-8 py-5 flex items-center justify-between text-[11px]"
-      style={{
-        backgroundColor: colors.primary,
-        color: "#ffffff",
-      }}
-    >
-      <span>
-        © {new Date().getFullYear()} {name || "My Website"}
-      </span>
-      <span className="opacity-80">Built with No-Code Platform</span>
-    </footer>
-  </div>
-</CardContent>
+                      <div className="relative h-[360px] rounded-2xl overflow-hidden shadow-lg">
+                        <img
+                          src="https://images.unsplash.com/photo-1522071820081-009f0129c71c"
+                          alt="Contact"
+                          className="h-full w-full object-cover"
+                        />
+                      </div>
+                    </div>
+                  </section>
 
-       
-       
+                  {/* ================= FOOTER ================= */}
+                  <footer
+                    className="px-8 py-5 flex items-center justify-between text-[11px]"
+                    style={{
+                      backgroundColor: colors.primary,
+                      color: "#ffffff",
+                    }}
+                  >
+                    <span>
+                      © {new Date().getFullYear()} {name || "My Website"}
+                    </span>
+                    <span className="opacity-80">Built with No-Code Platform</span>
+                  </footer>
+                </div>
+              </CardContent>
+
+
+
             </Card>
           </div>
         </div>

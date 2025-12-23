@@ -36,6 +36,11 @@ export function Stats({
     accent: "#10b981",
   }
 
+
+// const font = website?.fonts || {
+//     heading: "Inter, system-ui, sans-serif",
+//   }
+
   useEffect(() => {
     fetch(getApiUrl("STATS", websiteId))
       .then((res) => res.json())

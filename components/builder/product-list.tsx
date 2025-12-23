@@ -33,6 +33,10 @@ export function ProductList({
     accent: "#10b981",
   }
 
+  const font = website?.fonts || {
+    heading: "Inter, system-ui, sans-serif",
+  }
+
   useEffect(() => {
     fetch(getApiUrl("PRODUCT_LIST", websiteId))
       .then((res) => res.json())
@@ -72,14 +76,16 @@ export function ProductList({
                 <div className="flex-1">
                   <h3
                     className="mb-1 text-xl font-semibold"
-                    style={{ color: theme.primary }}
+                    style={{ color: theme.primary, fontFamily: font.heading }}
+
                   >
                     {product.name}
                   </h3>
 
                   <p
                     className="text-base"
-                    style={{ color: theme.primary, opacity: 0.8 }}
+                    style={{ color: theme.primary, opacity: 0.8, fontFamily: font.heading }}
+
                   >
                     {product.description}
                   </p>

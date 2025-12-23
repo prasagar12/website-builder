@@ -15,6 +15,14 @@ import { Button } from "@/components/ui/button"
 import { Eye, Download, Code, ArrowUp, ArrowDown, ArrowLeft } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
+import { CenterAddSection } from "@/components/builder/center-add-section"
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { ChevronDown } from "lucide-react"
 
 export default function BuilderPage() {
   const searchParams = useSearchParams()
@@ -55,33 +63,38 @@ export default function BuilderPage() {
     setWebsite(loadedWebsite)
   }, [websiteId, pageId])
 
-  
+
   const saveLayout = (newLayout: LayoutBlock[]) => {
     setLayout(newLayout)
     StorageManager.updatePageLayout(websiteId, pageId, newLayout)
   }
 
-  const handleAddComponent = (type: ComponentType) => {
-    const Component = componentRegistry[type]
-    const defaultConfig = (Component as any).craft?.props?.config || {}
+  // const handleAddComponent = (type: ComponentType) => {
+  //   const Component = componentRegistry[type]
+  //   const defaultConfig = (Component as any).craft?.props?.config || {}
 
-    const newBlock: LayoutBlock = {
-      type,
-      config: {
-        ...defaultConfig,
-        id: LayoutManager.generateId(),
-      },
-    }
+  //   const newBlock: LayoutBlock = {
+  //     type,
+  //     config: {
+  //       ...defaultConfig,
+  //       id: LayoutManager.generateId(),
+  //     },
+  //   }
 
-    const newLayout = LayoutManager.addComponent(layout, newBlock)
-    saveLayout(newLayout)
-    setSelectedBlockId(newBlock.config.id)
+  //   const newLayout = LayoutManager.addComponent(layout, newBlock)
+  //   saveLayout(newLayout)
+  //   setSelectedBlockId(newBlock.config.id)
 
-    toast({
-      title: "Component added",
-      description: `${type.replace(/_/g, " ")} has been added to the page.`,
-    })
-  }
+  //   toast({
+  //     title: "Component added",
+  //     description: `${type.replace(/_/g, " ")} has been added to the page.`,
+  //   })
+  // }
+
+
+
+
+
 
   const handleUpdateConfig = (blockId: string, newConfig: Partial<LayoutBlock["config"]>) => {
     const newLayout = LayoutManager.updateComponentConfig(layout, blockId, newConfig)
@@ -123,25 +136,94 @@ export default function BuilderPage() {
 
   const selectedBlock = layout.find((b) => b.config.id === selectedBlockId) || null
 
+
+  const hasNavbarAndFooter =
+    layout.some((b) => b.type === "NAVBAR") &&
+    layout.some((b) => b.type === "FOOTER")
+
+
+  const handleAddComponent = (type: ComponentType) => {
+    const Component = componentRegistry[type]
+    const defaultConfig = (Component as any).craft?.props?.config || {}
+
+    const newBlock: LayoutBlock = {
+      type,
+      config: {
+        ...defaultConfig,
+        id: LayoutManager.generateId(),
+      },
+    }
+
+    const footerIndex = layout.findIndex((b) => b.type === "FOOTER")
+
+    let newLayout: LayoutBlock[]
+
+    if (footerIndex !== -1) {
+      // 👇 ALWAYS INSERT BEFORE FOOTER
+      newLayout = [
+        ...layout.slice(0, footerIndex),
+        newBlock,
+        ...layout.slice(footerIndex),
+      ]
+    } else {
+      // fallback (should rarely happen)
+      newLayout = [...layout, newBlock]
+    }
+
+    saveLayout(newLayout)
+    setSelectedBlockId(newBlock.config.id)
+
+    toast({
+      title: "Component added",
+      description: `${type.replace(/_/g, " ")} has been added to the page.`,
+    })
+  }
+
+
+
+
   return (
     <div className="flex h-screen flex-col">
       <div className="border-border bg-background flex h-14 items-center justify-between border-b px-4">
         <div className="flex items-center gap-2">
           <h1 className="text-lg font-semibold">Page Builder</h1>
-          {page && <span className="text-muted-foreground text-sm">/ {page.name}</span>}
- 
-            <Button variant="outline" size="sm" asChild>
+          {website?.pages?.length && page ? (
+            <div className="flex items-center gap-2 text-sm text-muted-foreground">
+              <span>/</span>
+
+              <DropdownMenu>
+                <DropdownMenuTrigger className="flex items-center gap-1 hover:text-foreground transition font-medium">
+                  {page.name}
+                  <ChevronDown className="h-4 w-4 opacity-60" />
+                </DropdownMenuTrigger>
+
+                <DropdownMenuContent align="start" className="min-w-40">
+                  {website.pages.map((p) => (
+                    <DropdownMenuItem key={p.id} asChild>
+                      <Link
+                        href={`/builder?website=${website.id}&page=${p.id}`}
+                        className={`w-full ${p.id === page.id ? "font-semibold" : ""
+                          }`}
+                      >
+                        {p.name}
+                      </Link>
+                    </DropdownMenuItem>
+                  ))}
+                </DropdownMenuContent>
+              </DropdownMenu>
+            </div>
+          ) : null}
+
+
+
+          <Button variant="outline"  size="sm" asChild>
             <Link href='/' target="_blank">
               <ArrowLeft className="mr-2 h-3 w-4" />
               Back
             </Link>
           </Button>
-
         </div>
-
         <div className="flex items-center gap-2">
-          
-
           <Button size="sm" asChild>
             <Link href={`/preview/${websiteId}/${pageId}`} target="_blank">
               <Eye className="mr-2 h-4 w-4" />
@@ -153,23 +235,74 @@ export default function BuilderPage() {
 
       <div className="flex flex-1 overflow-hidden">
         <div className="border-border w-80 shrink-0 overflow-hidden border-r">
-          <ComponentLibrary onAddComponent={handleAddComponent} />
+          <ComponentLibrary onAddComponent={handleAddComponent} layout={layout} />
         </div>
 
+
         <div className="bg-muted/30 flex-1 overflow-auto">
-          <div className="mx-auto min-h-full max-w-6xl">
-            <LayoutPreview
-              layout={layout}
-              websiteId={websiteId}
-              selectedBlockId={selectedBlockId}
-              onSelectBlock={setSelectedBlockId}
-              onDragStart={handleDragStart} 
-              onDragOver={handleDragOver}
-              onDragEnd={handleDragEnd}
-              onDelete={handleDeleteBlock}
-            />
+          <div className="mx-auto min-h-full max-w-6xl py-10 space-y-10">
+
+            {hasNavbarAndFooter ? (
+              <>
+                {/* ================= NAVBAR ================= */}
+                <LayoutPreview
+                  layout={layout.filter((b) => b.type === "NAVBAR")}
+                  websiteId={websiteId}
+                  selectedBlockId={selectedBlockId}
+                  onSelectBlock={setSelectedBlockId}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDragEnd={handleDragEnd}
+                  onDelete={handleDeleteBlock}
+                />
+
+                {/* ================= CENTER ADD SECTION ================= */}
+
+                {/* ================= MIDDLE CONTENT ================= */}
+                <LayoutPreview
+                  layout={layout.filter(
+                    (b) => b.type !== "NAVBAR" && b.type !== "FOOTER"
+                  )}
+                  websiteId={websiteId}
+                  selectedBlockId={selectedBlockId}
+                  onSelectBlock={setSelectedBlockId}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDragEnd={handleDragEnd}
+                  onDelete={handleDeleteBlock}
+                />
+                <CenterAddSection onAdd={handleAddComponent} layout={layout} />
+
+                {/* ================= FOOTER ================= */}
+                <LayoutPreview
+                  layout={layout.filter((b) => b.type === "FOOTER")}
+                  websiteId={websiteId}
+                  selectedBlockId={selectedBlockId}
+                  onSelectBlock={setSelectedBlockId}
+                  onDragStart={handleDragStart}
+                  onDragOver={handleDragOver}
+                  onDragEnd={handleDragEnd}
+                  onDelete={handleDeleteBlock}
+                />
+              </>
+            ) : (
+              /* Fallback (if no navbar/footer yet) */
+              <LayoutPreview
+                layout={layout}
+                websiteId={websiteId}
+                selectedBlockId={selectedBlockId}
+                onSelectBlock={setSelectedBlockId}
+                onDragStart={handleDragStart}
+                onDragOver={handleDragOver}
+                onDragEnd={handleDragEnd}
+                onDelete={handleDeleteBlock}
+              />
+            )}
           </div>
         </div>
+
+
+
 
         <div className="border-border w-80 shrink-0 overflow-hidden border-l">
           <SettingsPanel
