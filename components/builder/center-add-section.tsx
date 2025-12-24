@@ -26,7 +26,7 @@ export function CenterAddSection({ onAdd ,layout}: Props) {
           size="lg"
           variant="outline"
           onClick={() => setOpen(!open)}
-          className="rounded-2xl border-dashed px-10  text-muted-foreground"
+          className="rounded-2xl border-dashed px-10 cursor-pointer  text-muted-foreground"
         >
           <Plus className="mr-2 h-5 w-5 cursor-pointer" />
           Add Section
@@ -49,6 +49,7 @@ export function CenterAddSection({ onAdd ,layout}: Props) {
                     <p className="text-sm font-medium">{meta.name}</p>
                     <p className="text-xs text-muted-foreground">
                       {meta.description}
+                      {/* {meta.category} */}
                     </p>
                   </div>
                 </button>

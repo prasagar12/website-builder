@@ -29,12 +29,14 @@ export default function BuilderPage() {
   const websiteId = searchParams?.get("website") || "default-website"
   const pageId = searchParams?.get("page") || "default-page"
 
+
   const [layout, setLayout] = useState<LayoutBlock[]>([])
   const [selectedBlockId, setSelectedBlockId] = useState<string | null>(null)
   const [page, setPage] = useState<Page | null>(null)
   const [website, setWebsite] = useState<Website | null>(null)
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null) // Add drag state
   const { toast } = useToast()
+  
 
   useEffect(() => {
     let loadedPage = StorageManager.getPage(websiteId, pageId)
@@ -142,15 +144,16 @@ export default function BuilderPage() {
     layout.some((b) => b.type === "FOOTER")
 
 
-  const handleAddComponent = (type: ComponentType) => {
+  const handleAddComponent = (type: ComponentType,variant?:string) => {
     const Component = componentRegistry[type]
     const defaultConfig = (Component as any).craft?.props?.config || {}
-
+ console.log('variant in the add button',variant)
     const newBlock: LayoutBlock = {
       type,
       config: {
         ...defaultConfig,
         id: LayoutManager.generateId(),
+        layout: variant||'variant-1'
       },
     }
 

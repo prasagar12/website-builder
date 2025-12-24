@@ -52,8 +52,6 @@ export function Hero({
         className="relative overflow-hidden py-20"
         style={{
           backgroundColor: theme.secondary
-
-
         }}
       >
         <div className="container mx-auto px-4">
@@ -69,17 +67,14 @@ export function Hero({
               >
                 {config.title || "Build high-quality  engineering effort"}
               </h1>
-
               <p
                 className="mb-8 text-lg"
                 style={{ color: theme.primary, opacity: 0.85 }}
               >
                 {config.subtitle || "Leverage the power of AI to create stunning, responsive websites tailored to your needs in minutes."}
               </p>
-
               {config.showButton && (
-                <Button
-                  size="lg"
+                <Button size="lg"
                   style={{
                     backgroundColor: theme.accent,
                     color: "#ffffff",
@@ -92,7 +87,6 @@ export function Hero({
                 </Button>
               )}
             </div>
-
             {/* IMAGE */}
             <div className="relative overflow-hidden rounded-2xl">
               {config.image ? (
@@ -141,7 +135,6 @@ export function Hero({
         className="absolute inset-0"
         style={{ backgroundColor: theme.secondary, opacity: 0.85 }}
       />
-
       {/* Content */}
       <div className="container relative z-10 px-4 py-24 text-center">
         <h1

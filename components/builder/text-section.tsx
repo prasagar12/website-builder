@@ -78,14 +78,13 @@ export function TextSection({
       <div className="container mx-auto px-4">
         <div className={alignmentClasses[config.alignment || "left"]}>
           <h2
-            className="mb-4 text-3xl font-bold tracking-tight md:text-4xl"
+            className="mb-4 text-3xl font-bold  tracking-tight md:text-4xl"
             style={{ color: theme.primary 
                 , fontFamily: font.heading
             }}
           >
             {config.heading}
           </h2>
-
           <p
             className="max-w-3xl text-lg leading-relaxed"
             style={{ color: theme.primary, opacity: 0.85 }}

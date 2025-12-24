@@ -239,7 +239,7 @@ export default function WebsiteDashboard({ params }: { params: Promise<{ website
                 </CardTitle>
 
                 {/*  INLINE PAGE PREVIEW */}
-                <div className="relative h-24 overflow-hidden rounded-md border bg-background">
+                <div className="relative h-40 overflow-hidden rounded-md border bg-background">
                   <div
                     className="origin-top-left scale-[0.35]"
                     style={{
