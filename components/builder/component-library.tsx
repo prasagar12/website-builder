@@ -182,7 +182,7 @@
 
 import { useState } from "react"
 import clsx from "clsx"
-import { Plus } from "lucide-react"
+import { ArrowLeft, ArrowLeftSquare, ArrowRight, Plus } from "lucide-react"
 
 import { componentMetadata } from "@/lib/component-registry"
 import type { ComponentType, LayoutBlock } from "@/lib/types"
@@ -301,9 +301,6 @@ export function ComponentLibrary({
                                   </button> */}
                                 </h4>
 
-
-
-
                                 {/* Default Add (no variants) */}
                                 {!hasVariants && (
                                   <Button
@@ -358,7 +355,7 @@ export function ComponentLibrary({
                                     {variant.name}
                                   </div>
                                   <div className="hidden  group-hover:block absolute top-15 right-12">
-                                    <Plus />
+                                    <ArrowRight className="h-8 w-8" />
                                   </div>
                                 </div>
                               ))}

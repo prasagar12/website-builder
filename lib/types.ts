@@ -20,7 +20,7 @@ export interface BaseConfig {
 // Component-specific configs
 export interface HeroConfig extends BaseConfig {
   title: string
-   image?: string  
+  image?: string
   subtitle: string
   showButton?: boolean
   buttonText?: string
@@ -120,7 +120,7 @@ export interface Website {
   fonts?: {
     // Added font settings
     heading: string
-    
+
   }
   pages: Page[]
 

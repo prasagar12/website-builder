@@ -59,13 +59,13 @@ export function Hero({
             {/* TEXT */}
             <div>
               <h1
-                className="mb-4 text-balance text-4xl font-bold tracking-tight md:text-5xl lg:text-6xl"
+                className="mb-4  text-4xl font-bold line-clamp-4 md:text-3xl lg:text-4xl"
                 style={{
                   color: theme.primary,
                   fontFamily: font.heading,
                 }}
               >
-                {config.title || "Build high-quality  engineering effort"}
+                {config.title}
               </h1>
               <p
                 className="mb-8 text-lg"
@@ -75,13 +75,15 @@ export function Hero({
               </p>
               {config.showButton && (
                 <Button size="lg"
+                
                   style={{
                     backgroundColor: theme.accent,
                     color: "#ffffff",
                   }}
                   asChild
                 >
-                  <Link href={buttonHref}>
+                  <Link href={buttonHref} target="_blank">
+                  
                     {config.buttonText || "Get Started"}
                   </Link>
                 </Button>
@@ -138,10 +140,10 @@ export function Hero({
       {/* Content */}
       <div className="container relative z-10 px-4 py-24 text-center">
         <h1
-          className="mb-4 text-balance text-5xl font-bold tracking-tight md:text-6xl lg:text-7xl"
+          className="mb-4  text-4xl font-bold line-clamp-4 md:text-3xl lg:text-4xl"
           style={{ color: theme.primary }}
         >
-          {config.title || "Build high-quality  engineering effort"}
+          {config.title || "Build high-quality engineering effort"}
         </h1>
 
         <p
@@ -150,7 +152,6 @@ export function Hero({
         >
           {config.subtitle || "Leverage the power of AI to create stunning, responsive websites tailored to your needs in minutes."}
         </p>
-
         {config.showButton && (
           <Button
             size="lg"

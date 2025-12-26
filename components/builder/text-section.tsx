@@ -13,6 +13,8 @@ export function TextSection({
     left: "text-left",
     center: "text-center",
     right: "text-right",
+
+
   }
 
   // 🔹 THEME (same contract as Navbar & Hero)
@@ -72,21 +74,25 @@ export function TextSection({
   /* ------------------------------------------------------------------ */
   return (
     <section
-      className="py-10"
+      className="py-5"
       style={{ backgroundColor: theme.secondary }}
     >
-      <div className="container mx-auto px-4">
-        <div className={alignmentClasses[config.alignment || "left"]}>
+      <div className="container  mx-auto px-4">
+        <div
+          className={`${alignmentClasses[config.alignment || "center"]} `}
+        >
+
           <h2
-            className="mb-4 text-3xl font-bold  tracking-tight md:text-4xl"
-            style={{ color: theme.primary 
-                , fontFamily: font.heading
+            className="mb-4 text-3xl  font-bold   md:text-4xl"
+            style={{
+              color: theme.primary
+              , fontFamily: font.heading
             }}
           >
             {config.heading}
           </h2>
           <p
-            className="max-w-3xl text-lg leading-relaxed"
+            className="  text-lg leading-relaxed -mt-3 "
             style={{ color: theme.primary, opacity: 0.85 }}
           >
             {config.content}

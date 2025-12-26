@@ -4,12 +4,14 @@ import { useEffect, useState } from "react"
 import type { ServiceGridConfig, Website } from "@/lib/types"
 import { getApiUrl } from "@/lib/api-endpoints"
 import { Card } from "@/components/ui/card"
+import Image from "next/image"
 
 interface Service {
   id: string
   title: string
   description: string
   icon?: string
+  image?: string
 }
 
 export function ServiceGrid({
@@ -45,9 +47,9 @@ export function ServiceGrid({
       })
       .catch(() => {
         setServices([
-          { id: "1", title: "Service 1", description: "Description for service 1" },
-          { id: "2", title: "Service 2", description: "Description for service 2" },
-          { id: "3", title: "Service 3", description: "Description for service 3" },
+          { id: "1", title: "Service 1", description: "Description for service 1", image: "" },
+          { id: "2", title: "Service 2", description: "Description for service 2", image: "" },
+          { id: "3", title: "Service 3", description: "Description for service 3", image: "" },
         ])
       })
   }, [config.limit, websiteId])
@@ -63,7 +65,7 @@ export function ServiceGrid({
   if (config.layout === "variant-2") {
     return (
       <section
-        className="py-10"
+        className="py-5"
         style={{ backgroundColor: theme.secondary }}
       >
         <div className="container mx-auto px-4 space-y-6">
@@ -77,11 +79,13 @@ export function ServiceGrid({
                 boxShadow: `0 10px 30px -12px ${theme.accent}40`,
               }}
             >
-              <div className="p-6 hover:-translate-y-0.5">
+              <div className="p-2 hover:-translate-y-0.5">
                 <h3
                   className="mb-2 text-xl font-semibold"
-                  style={{ color: theme.primary, 
-                    fontFamily: font.heading }}
+                  style={{
+                    color: theme.primary,
+                    fontFamily: font.heading
+                  }}
                 >
                   {service.title}
                 </h3>
@@ -104,7 +108,7 @@ export function ServiceGrid({
   /* ------------------------------------------------------------------ */
   return (
     <section
-      className="py-10"
+      className="py-5"
       style={{ backgroundColor: theme.secondary }}
     >
       <div className="container mx-auto px-4">
@@ -118,21 +122,38 @@ export function ServiceGrid({
                 boxShadow: `0 12px 30px -12px ${theme.accent}40`,
               }}
             >
-              <div className="p-6">
-                <h3
-                  className="mb-2 text-xl font-semibold"
-                  style={{ color: theme.primary }}
-                >
-                  {service.title}
-                </h3>
+             <div className="p-6">
+  {/* IMAGE */}
+  {service.image && (
+    <div className="relative mb-4 w-full overflow-hidden rounded-lg border">
+      <Image
+        src={service.image}
+        alt={service.title}
+        width={400}
+        height={300}
+        className="h-48 w-full "
+      />
+    </div>
+  )}
 
-                <p
-                  className="text-base leading-relaxed"
-                  style={{ color: theme.primary, opacity: 0.85 }}
-                >
-                  {service.description}
-                </p>
-              </div>
+  {/* TITLE */}
+  <h3
+    className="mb-1 text-xl font-semibold"
+    style={{ color: theme.primary }}
+  >
+    {service.title}
+  </h3>
+
+  {/* SUBTITLE / DESCRIPTION */}
+  <p
+    className="text-base leading-relaxed"
+    style={{ color: theme.primary, opacity: 0.85 }}
+  >
+    {service.description}
+  </p>
+</div>
+
+
             </Card>
           ))}
         </div>

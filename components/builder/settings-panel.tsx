@@ -48,6 +48,8 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
     handleChange("links", links)
   }
 
+
+
   return (
     <div className="flex h-full flex-col">
       <div className="border-border bg-background sticky top-0 z-10 border-b p-4">
@@ -143,6 +145,16 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
                 onChange={(e) => handleChange("image", e.target.value)}
               />
             </div>
+
+            {/* text  title  */}
+            <div className="space-y-2">
+              <Label htmlFor="title">Title</Label>
+              <Textarea
+                id="title"
+                value={(block.config as any).title || ""}
+                onChange={(e) => handleChange("title", e.target.value)}
+              />
+            </div>
             <div className="space-y-2">
               <Label htmlFor="subtitle">Subtitle</Label>
               <Textarea
@@ -151,6 +163,7 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
                 onChange={(e) => handleChange("subtitle", e.target.value)}
               />
             </div>
+
             <div className="flex items-center justify-between">
               <Label htmlFor="showButton">Show Button</Label>
               <Switch
@@ -260,6 +273,7 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
         {/* service grid */}
         {block.type === "SERVICE_GRID" && (
           <>
+            {/* LIMIT */}
             <div className="space-y-2">
               <Label htmlFor="limit">Number of Services</Label>
               <Input
@@ -268,28 +282,36 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
                 min="1"
                 max="12"
                 value={(block.config as any).limit || 6}
-                onChange={(e) => handleChange("limit", Number.parseInt(e.target.value))}
+                onChange={(e) =>
+                  handleChange("limit", Number.parseInt(e.target.value))
+                }
               />
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="columns">Columns</Label>
-              <Select
-                value={String((block.config as any).columns || 3)}
-                onValueChange={(value) => handleChange("columns", Number.parseInt(value))}
-              >
-               
-                <SelectTrigger id="columns">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="2">2 Columns</SelectItem>
-                  <SelectItem value="3">3 Columns</SelectItem>
-                  <SelectItem value="4">4 Columns</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
+
+            {/* COLUMNS — ONLY FOR VARIANT-1 */}
+            {(block.config as any).layout !== "variant-2" && (
+              <div className="space-y-2">
+                <Label htmlFor="columns">Columns</Label>
+                <Select
+                  value={String((block.config as any).columns || 3)}
+                  onValueChange={(value) =>
+                    handleChange("columns", Number.parseInt(value))
+                  }
+                >
+                  <SelectTrigger id="columns">
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="2">2 Columns</SelectItem>
+                    <SelectItem value="3">3 Columns</SelectItem>
+                    <SelectItem value="4">4 Columns</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
           </>
         )}
+
         {/* product list */}
 
         {block.type === "PRODUCT_LIST" && (

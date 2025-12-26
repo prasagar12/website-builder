@@ -6,12 +6,12 @@ export const mockHeroData = {
 }
 
 export const mockServices = [
-  { id: "1", title: "Web Development", description: "Custom websites tailored to your needs" },
-  { id: "2", title: "Mobile Apps", description: "Native and cross-platform applications" },
-  { id: "3", title: "UI/UX Design", description: "Beautiful, user-friendly interfaces" },
-  { id: "4", title: "Digital Marketing", description: "Grow your online presence" },
-  { id: "5", title: "SEO Optimization", description: "Improve your search rankings" },
-  { id: "6", title: "Consulting", description: "Expert guidance for your projects" },
+  { id: "1", title: "Web Development", description: "Custom websites tailored to your needs", image: "/product-starter.jpg" },
+  { id: "2", title: "Mobile Apps", description: "Native and cross-platform applications", image: "/product-professional.jpg" },
+  { id: "3", title: "UI/UX Design", description: "Beautiful, user-friendly interfaces", image: "/product-enterprise.jpg" },
+  { id: "4", title: "Digital Marketing", description: "Grow your online presence", image: "/product-starter.jpg" },
+  { id: "5", title: "SEO Optimization", description: "Improve your search rankings", image: "/product-professional.jpg" },
+  { id: "6", title: "Consulting", description: "Expert guidance for your projects", image: "/professional-woman-avatar.png" },
 ]
 
 export const mockProducts = [
@@ -56,6 +56,13 @@ export const mockTestimonials = [
   {
     id: "3",
     name: "Emily Rodriguez",
+    role: "Freelancer",
+    content: "I can build professional websites in hours instead of days. Game changer!",
+    avatar: "/professional-woman-avatar.png",
+  },
+  {
+    id: "4",
+    name: "sagar Rodriguez",
     role: "Freelancer",
     content: "I can build professional websites in hours instead of days. Game changer!",
     avatar: "/professional-woman-avatar.png",

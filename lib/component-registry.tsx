@@ -120,7 +120,7 @@ export const componentMetadata = {
       imageUrl: "/testimonials/variant1.png",
     },
     {
-      name: "column List",
+      name: "Scrollable cards",
       id: "variant-2",
       imageUrl: "/testimonials/variant2.png",
     },
