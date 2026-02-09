@@ -59,6 +59,139 @@ export function ServiceGrid({
     3: "md:grid-cols-3",
     4: "md:grid-cols-4",
   }
+
+
+
+/* ------------------------------------------------------------------ */
+/* VARIANT 4 – Centered marketing cards */
+/* ------------------------------------------------------------------ */
+if (config.layout === "variant-4") {
+  return (
+    <section className="py-10" style={{ backgroundColor: theme.secondary }}>
+      <div className="container mx-auto px-4">
+        <div className="grid gap-8 md:grid-cols-3">
+          {services.map((service) => (
+            <Card
+              key={service.id}
+              className="text-center p-6 hover:-translate-y-1 transition-all"
+              style={{
+                backgroundColor: "#fff",
+                boxShadow: `0 14px 35px -12px ${theme.accent}50`,
+              }}
+            >
+              {/* IMAGE */}
+              {service.image && (
+                <Image
+                  src={service.image}
+                  alt={service.title}
+                  width={120}
+                  height={120}
+                  className="mx-auto mb-4"
+                />
+              )}
+
+              <h3
+                className="text-xl font-bold mb-2"
+                style={{ color: theme.primary }}
+              >
+                {service.title}
+              </h3>
+
+              <p
+                className="text-sm"
+                style={{ color: theme.primary, opacity: 0.85 }}
+              >
+                {service.description}
+              </p>
+            </Card>
+          ))}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+
+/* ------------------------------------------------------------------ */
+/* VARIANT 3 – Image/Icon left, content right */
+/* ------------------------------------------------------------------ */
+if (config.layout === "variant-3") {
+  return (
+    <section className="py-5" style={{ backgroundColor: theme.secondary }}>
+      <div className="container mx-auto px-4 space-y-4">
+        {services.map((service) => (
+          <Card
+            key={service.id}
+            className="p-4"
+            style={{
+              backgroundColor: "#ffffff",
+              boxShadow: `0 10px 30px -12px ${theme.accent}40`,
+            }}
+          >
+            <div className="flex gap-4 items-center">
+              
+              {/* LEFT CARD – IMAGE */}
+              <Card
+                className="flex items-center justify-center p-2"
+                style={{
+                  width: 90,
+                  height: 90,
+                  backgroundColor: theme.secondary,
+                  boxShadow: `0 6px 18px -6px ${theme.accent}50`,
+                }}
+              >
+                {service.image ? (
+                  <Image
+                    src={service.image}
+                    alt={service.title}
+                    width={70}
+                    height={70}
+                    className="rounded-md object-cover"
+                  />
+                ) : (
+                  <span
+                    className="text-sm font-semibold"
+                    style={{ color: theme.primary }}
+                  >
+                    No Image
+                  </span>
+                )}
+              </Card>
+
+              {/* RIGHT CARD – CONTENT */}
+              <Card
+                className="flex-1 p-4"
+                style={{
+                  backgroundColor: "#ffffff",
+                  boxShadow: `0 6px 18px -8px ${theme.accent}30`,
+                }}
+              >
+                <h3
+                  className="text-lg font-semibold mb-1"
+                  style={{ color: theme.primary }}
+                >
+                  {service.title}
+                </h3>
+                <p
+                  className="text-sm leading-relaxed"
+                  style={{ color: theme.primary, opacity: 0.85 }}
+                >
+                  {service.description}
+                </p>
+              </Card>
+
+            </div>
+          </Card>
+        ))}
+      </div>
+    </section>
+  )
+}
+
+
+  
+
   /* ------------------------------------------------------------------ */
   /* VARIANT 2 – Horizontal list cards */
   /* ------------------------------------------------------------------ */

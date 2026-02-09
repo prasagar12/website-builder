@@ -6,10 +6,11 @@ import { LayoutManager, layoutTemplates } from "@/lib/layout-manager"
 import type { Website } from "@/lib/types"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
-import { Plus, ExternalLink, Trash2, FileText } from "lucide-react"
+import { Plus, Trash2, FileText } from "lucide-react"
 import Link from "next/link"
 import { useToast } from "@/hooks/use-toast"
 import { WebsitePreview } from "@/components/builder/website-preview"
+import { UserMenu } from "@/components/auth/user-menu"
 
 export default function HomePage() {
   const [websites, setWebsites] = useState<Website[]>([])
@@ -70,10 +71,13 @@ export default function HomePage() {
             <h1 className="text-2xl font-bold">No-Code Website Builder</h1>
             <p className="text-muted-foreground text-sm">Create and manage your websites</p>
           </div>
-          <Button className=" cursor-pointer" onClick={handleCreateWebsite}>
-            <Plus className="mr-2 h-4 w-4" />
-            New Website
-          </Button>
+          <div className="flex items-center gap-2">
+            <Button className="cursor-pointer" onClick={handleCreateWebsite}>
+              <Plus className="mr-2 h-4 w-4" />
+              New Website
+            </Button>
+            <UserMenu />
+          </div>
         </div>
       </div>
       <div className="container mx-auto px-4 py-8">

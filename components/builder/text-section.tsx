@@ -28,18 +28,92 @@ export function TextSection({
     heading: "Inter, system-ui, sans-serif",
   }
 
+
+
+  if (config.layout === "variant-4") {
+  return (
+    <section
+      className="py-2"
+      style={{
+        background: `linear-gradient(135deg, ${theme.secondary}, ${theme.accent}20)`,
+      }}
+    >
+      <div className="container mx-auto px-4">
+        <div className="mx-auto  text-center">
+          <h2
+
+             className={`${alignmentClasses[config.alignment || "center"]} text-4xl font-extrabold md:text-5xl`}
+            style={{
+              color: theme.primary,
+              fontFamily: font.heading,
+            }}
+          >
+            {config.heading}
+          </h2>
+
+          <p
+            className="mx-auto max-w-2xl text-lg leading-relaxed"
+            style={{ color: theme.primary, opacity: 0.9 }}
+          >
+            {config.content}
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
+/* ------------------------------------------------------------------ */
+/* VARIANT 3 – Accent Border layout */
+/* ------------------------------------------------------------------ */
+if (config.layout === "variant-3") {
+  return (
+    <section
+      className="py-2"
+      style={{ backgroundColor: theme.secondary }}
+    >
+      <div className="container mx-auto px-4">
+        <div
+      
+          className={`${alignmentClasses[config.alignment || "center"]}  mx-auto  pl-2 `}
+          style={{
+            borderLeft: `6px solid ${theme.accent}`,
+          }}
+        >
+          <h2
+            className="mb-4 text-3xl font-bold md:text-4xl"
+            style={{
+              color: theme.primary,
+              fontFamily: font.heading,
+            }}
+          >
+            {config.heading}
+          </h2>
+
+          <p
+            className="text-lg leading-relaxed"
+            style={{ color: theme.primary, opacity: 0.85 }}
+          >
+            {config.content}
+          </p>
+        </div>
+      </div>
+    </section>
+  )
+}
+
   /* ------------------------------------------------------------------ */
   /* VARIANT 2 – Card / Highlight layout */
   /* ------------------------------------------------------------------ */
   if (config.layout === "variant-2") {
     return (
       <section
-        className="py-16"
+        className="py-2"
         style={{ backgroundColor: theme.secondary }}
       >
         <div className="container mx-auto px-4">
           <div
-            className="mx-auto max-w-3xl rounded-2xl p-8"
+            className="mx-auto max-w-3xl rounded-2xl p-2"
             style={{
               backgroundColor: "#ffffff",
               border: `2px solid ${theme.accent}40`,
@@ -74,7 +148,7 @@ export function TextSection({
   /* ------------------------------------------------------------------ */
   return (
     <section
-      className="py-5"
+      className="py-2"
       style={{ backgroundColor: theme.secondary }}
     >
       <div className="container  mx-auto px-4">

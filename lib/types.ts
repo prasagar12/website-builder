@@ -14,7 +14,7 @@ export type ComponentType =
 // Base config that all components accept
 export interface BaseConfig {
   id: string
-  layout?: "variant-1" | "variant-2"
+  layout?: "variant-1" | "variant-2" | "variant-3" | "variant-4"
 }
 
 // Component-specific configs
@@ -28,11 +28,17 @@ export interface HeroConfig extends BaseConfig {
   buttonLinkType?: "page" | "external"
 }
 
+// Component-specific configs
+
 export interface TextSectionConfig extends BaseConfig {
   heading: string
   content: string
   alignment?: "left" | "center" | "right"
 }
+
+
+// Service Grid Config
+
 
 export interface ServiceGridConfig extends BaseConfig {
   limit?: number
@@ -69,7 +75,7 @@ export interface CTAConfig extends BaseConfig {
 
 export interface NavbarConfig extends BaseConfig {
   brandName: string
-  logo?: string // URL to the logo image
+  logo?: string 
   links: Array<{
     label: string
     pageId: string // Links to other pages in the website
@@ -109,16 +115,15 @@ export interface LayoutBlock {
 export interface Website {
   id: string
   name: string
-  domain?: string // Added domain field
-  dns?: string // Added DNS field
+  domain?: string 
+  dns?: string 
   colors?: {
-    // Added color scheme
+  
     primary: string
     secondary: string
     accent: string
   }
   fonts?: {
-    // Added font settings
     heading: string
 
   }

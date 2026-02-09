@@ -43,6 +43,154 @@ export function Hero({
       ? `/render/${websiteId}/${config.buttonLink}`
       : config.buttonLink || "#"
 
+
+      /* ------------------------------------------------------------------ */
+/* VARIANT 4 – Enterprise / Stats Layout */
+/* ------------------------------------------------------------------ */
+if (config.layout === "variant-4") {
+  return (
+    <section
+      className="py-24"
+      style={{ backgroundColor: theme.secondary }}
+    >
+      <div className="container mx-auto grid items-center gap-16 px-4 lg:grid-cols-2">
+        
+        {/* LEFT CONTENT */}
+        <div>
+          <h1
+            className="mb-6 text-4xl md:text-5xl font-bold leading-tight"
+            style={{
+              color: theme.primary,
+              fontFamily: font.heading,
+            }}
+          >
+            {config.title || "Build products that scale with your business"}
+          </h1>
+
+          <p
+            className="mb-10 text-lg"
+            style={{ color: theme.primary, opacity: 0.85 }}
+          >
+            {config.subtitle ||
+              "We help startups and enterprises design, build, and launch high-performance digital products."}
+          </p>
+
+          {config.showButton && (
+            <Button
+              size="lg"
+              style={{
+                backgroundColor: theme.accent,
+                color: "#fff",
+              }}
+              asChild
+            >
+              <Link href={buttonHref}>
+                {config.buttonText || "Get Started"}
+              </Link>
+            </Button>
+          )}
+        </div>
+
+        {/* RIGHT TWO DIVS */}
+        <div className="grid gap-6 sm:grid-cols-2">
+          
+          {/* CARD 1 */}
+          <div className="rounded-3xl border bg-white p-6 shadow-md">
+            <p className="mb-3 text-sm uppercase tracking-wide text-gray-500">
+              Our Focus
+            </p>
+            <h3 className="mb-2 text-xl font-semibold text-black">
+              Modern Development
+            </h3>
+            <p className="text-sm text-gray-600">
+              Clean architecture, scalable systems and future-ready technology.
+            </p>
+          </div>
+
+          {/* CARD 2 */}
+          <div className="rounded-3xl border bg-white p-6 shadow-md">
+            <p className="mb-3 text-sm uppercase tracking-wide text-gray-500">
+              Our Impact
+            </p>
+            <h3 className="mb-2 text-xl font-semibold text-black">
+              Proven Results
+            </h3>
+            <p className="text-sm text-gray-600">
+              250+ projects delivered with long-term client success.
+            </p>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
+      /* ------------------------------------------------------------------ */
+/* VARIANT 3 – Glassmorphism / Premium CTA */
+/* ------------------------------------------------------------------ */
+if (config.layout === "variant-3") {
+  return (
+    <section
+      className="relative overflow-hidden py-28"
+      style={{ backgroundColor: theme.secondary }}
+    >
+      {/* BG IMAGE */}
+      {config.image && (
+        <Image
+          fill
+          src={config.image}
+          alt="Hero Background"
+          className="object-cover"
+        />
+      )}
+
+      {/* Overlay */}
+      <div className="absolute inset-0 bg-black/40" />
+
+      {/* CONTENT */}
+      <div className="relative z-10 container mx-auto px-4">
+        <div className="mx-auto max-w-3xl rounded-3xl border bg-white/20 p-10 text-center backdrop-blur-xl">
+          <h1
+            className="mb-4 text-4xl font-bold"
+            style={{
+              color: theme.primary,
+              fontFamily: font.heading,
+            }}
+          >
+            {config.title || "Build stunning websites faster"}
+          </h1>
+
+          <p
+            className="mb-8 text-lg"
+            style={{ color: theme.primary, opacity: 0.85 }}
+          >
+            {config.subtitle ||
+              "Launch beautiful, high-performance websites with AI-powered components."}
+          </p>
+
+          {config.showButton && (
+            <Button
+              size="lg"
+              style={{
+                backgroundColor: theme.accent,
+                color: "#fff",
+              }}
+              asChild
+            >
+              <Link href={buttonHref}>
+                {config.buttonText || "Start Building"}
+              </Link>
+            </Button>
+          )}
+        </div>
+      </div>
+    </section>
+  )
+}
+
+
   /* ------------------------------------------------------------------ */
   /* VARIANT 2 – Side-by-side layout */
   /* ------------------------------------------------------------------ */
@@ -119,7 +267,7 @@ export function Hero({
   /* ------------------------------------------------------------------ */
   return (
     <section
-      className="relative flex min-h-150 items-center justify-center overflow-hidden"
+      className="relative  flex min-h-150 items-center justify-center overflow-hidden"
       style={{ backgroundColor: theme.secondary }}
     >
       {/* Background Image */}
@@ -134,11 +282,11 @@ export function Hero({
 
       {/* Overlay for readability */}
       <div
-        className="absolute inset-0"
-        style={{ backgroundColor: theme.secondary, opacity: 0.85 }}
+        className="absolute  inset-0"
+        style={{ backgroundColor: theme.secondary, opacity: 0.6 }}
       />
       {/* Content */}
-      <div className="container relative z-10 px-4 py-24 text-center">
+      <div className="container  relative z-10 px-4 py-24 text-center">
         <h1
           className="mb-4  text-4xl font-bold line-clamp-4 md:text-3xl lg:text-4xl"
           style={{ color: theme.primary }}

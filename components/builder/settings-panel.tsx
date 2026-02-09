@@ -8,6 +8,7 @@ import { Switch } from "@/components/ui/switch"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Button } from "@/components/ui/button"
 import { Trash2, Plus, X } from "lucide-react"
+import MediaUploader from "../comman/media-uploder"
 
 interface SettingsPanelProps {
   block: LayoutBlock | null
@@ -30,6 +31,19 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
   const handleChange = (key: string, value: any) => {
     onUpdate(block.config.id, { [key]: value })
   }
+
+  const getSingleFileValue = (files: string | string[] | undefined): string => {
+    if (!files) return "";
+    if (Array.isArray(files)) return files[0] || "";
+    return files;
+  };
+
+
+  const getFileArrayValue = (file: string | string[] | undefined): string[] => {
+    if (!file) return [];
+    if (Array.isArray(file)) return file;
+    return file ? [file] : [];
+  };
 
   const handleAddLink = () => {
     const links = (block.config as any).links || []
@@ -77,6 +91,8 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
             <SelectContent>
               <SelectItem value="variant-1">Style 1</SelectItem>
               <SelectItem value="variant-2">Style 2</SelectItem>
+              <SelectItem value="variant-3">Style 3</SelectItem>
+              <SelectItem value="variant-4">Style 4</SelectItem>
             </SelectContent>
           </Select>
         </div>
@@ -91,6 +107,18 @@ export function SettingsPanel({ block, onUpdate, onDelete, pages = [], websiteId
                 value={(block.config as any).logo || ""}
                 onChange={(e) => handleChange("logo", e.target.value)}
               />
+              {/* <MediaUploader
+                value={getFileArrayValue((block.config as any).image)}
+                onChange={(files) => {
+                  const fileValue = getSingleFileValue(files);
+                  handleChange("image", fileValue);
+                }}
+                project="qr-marketing-main"
+                 @ts-ignore
+                userIdentifier={authUser || "not"}
+                multiple={false}
+                mediaType="image"
+              /> */}
             </div>
             <div className="space-y-2">
               <div className="flex items-center justify-between">

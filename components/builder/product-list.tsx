@@ -53,6 +53,166 @@ export function ProductList({
       })
   }, [config.limit, websiteId])
 
+
+  /* ------------------------------------------------------------------ */
+  /* VARIANT 4 – Centered ecommerce cards */
+  /* ------------------------------------------------------------------ */
+  if (config.layout === "variant-4") {
+    return (
+      <section className="py-12" style={{ backgroundColor: theme.secondary }}>
+        <div className="container mx-auto px-4">
+          <div className="grid gap-8 sm:grid-cols-2 lg:grid-cols-3">
+            {products.map((product) => (
+              <Card
+                key={product.id}
+                className="p-6 text-center transition-all hover:-translate-y-1"
+                style={{
+                  backgroundColor: "#ffffff",
+                  boxShadow: `0 14px 35px -14px ${theme.accent}45`,
+                }}
+              >
+                {product.image && (
+                  <Image
+                    src={product.image}
+                    alt={product.name}
+                    width={200}
+                    height={160}
+                    className="mx-auto mb-4 rounded-md object-cover"
+                  />
+                )}
+
+                <h3
+                  className="text-xl font-bold mb-2"
+                  style={{ color: theme.primary }}
+                >
+                  {product.name}
+                </h3>
+
+                <p
+                  className="text-sm mb-4"
+                  style={{ color: theme.primary, opacity: 0.8 }}
+                >
+                  {product.description}
+                </p>
+
+                {config.showPrice && (
+                  <p
+                    className="text-2xl font-bold mb-4"
+                    style={{ color: theme.accent }}
+                  >
+                    ₹{product.price.toFixed(2)}
+                  </p>
+                )}
+
+                <Button
+                  className="w-full"
+                  style={{
+                    backgroundColor: theme.accent,
+                    color: "#fff",
+                  }}
+                >
+                  Buy Now
+                </Button>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+    )
+  }
+
+
+  /* ------------------------------------------------------------------ */
+  /* VARIANT 3 – Nested cards (image + content) */
+  /* ------------------------------------------------------------------ */
+  if (config.layout === "variant-3") {
+    return (
+      <section className="py-10" style={{ backgroundColor: theme.secondary }}>
+        <div className="container mx-auto px-4 space-y-4">
+          {products.map((product) => (
+            <Card
+              key={product.id}
+              className="p-4"
+              style={{
+                backgroundColor: "#ffffff",
+                boxShadow: `0 10px 30px -12px ${theme.accent}40`,
+              }}
+            >
+              <div className="flex gap-4 items-center">
+
+                {/* LEFT CARD – IMAGE */}
+                <Card
+                  className="flex items-center justify-center"
+                  style={{
+                    width: 110,
+                    height: 110,
+                    backgroundColor: theme.secondary,
+                    boxShadow: `0 6px 18px -8px ${theme.accent}50`,
+                  }}
+                >
+                  {product.image ? (
+                    <Image
+                      src={product.image}
+                      alt={product.name}
+                      width={90}
+                      height={90}
+                      className="rounded-md object-cover"
+                    />
+                  ) : (
+                    <span className="text-sm">No Image</span>
+                  )}
+                </Card>
+
+                {/* RIGHT CARD – CONTENT */}
+                <Card
+                  className="flex-1 p-4"
+                  style={{
+                    backgroundColor: "#ffffff",
+                    boxShadow: `0 6px 18px -10px ${theme.accent}30`,
+                  }}
+                >
+                  <h3
+                    className="text-lg font-semibold mb-1"
+                    style={{ color: theme.primary }}
+                  >
+                    {product.name}
+                  </h3>
+
+                  <p
+                    className="text-sm mb-3"
+                    style={{ color: theme.primary, opacity: 0.85 }}
+                  >
+                    {product.description}
+                  </p>
+
+                  {config.showPrice && (
+                    <p
+                      className="text-xl font-bold mb-3"
+                      style={{ color: theme.accent }}
+                    >
+                      ₹{product.price.toFixed(2)}
+                    </p>
+                  )}
+
+                  <Button
+                    style={{
+                      backgroundColor: theme.accent,
+                      color: "#fff",
+                    }}
+                  >
+                    View Details
+                  </Button>
+                </Card>
+              </div>
+            </Card>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
+
+
   /* ------------------------------------------------------------------ */
   /* VARIANT 2 – Horizontal list */
   /* ------------------------------------------------------------------ */
@@ -144,7 +304,7 @@ export function ProductList({
                     src={product.image}
                     alt={product.name}
                     fill
-                   
+
                   />
                 </div>
               )}
@@ -191,7 +351,7 @@ export function ProductList({
   )
 }
 
-
+  
 ProductList.craft = {
   displayName: "Product List",
   props: {

@@ -30,6 +30,137 @@ export function Navbar({
     heading: "Inter, system-ui, sans-serif",
   }
 
+
+/* ===================================================== */
+/* VARIANT 4 – Minimal Pro / Dashboard */
+/* ===================================================== */
+if (config.layout === "variant-4") {
+  return (
+    <nav
+      className="sticky top-0 z-50 border-b"
+      style={{
+        backgroundColor: theme.primary,
+        fontFamily: font.heading,
+      }}
+    >
+      <div className="mx-auto flex h-14 max-w-7xl items-center justify-between px-6">
+        {/* BRAND */}
+        <div className="flex items-center gap-3">
+          {config.logo && (
+            <Image src={config.logo} width={36} height={36} alt="Logo" />
+          )}
+          <span
+            className="text-sm font-semibold uppercase tracking-wide"
+            style={{ color: theme.secondary }}
+          >
+            {config.brandName || "Brand"}
+          </span>
+        </div>
+
+        {/* LINKS */}
+        <div className="hidden md:flex items-center gap-6">
+          {config.links?.map((link, i) => (
+            <Link
+              key={i}
+              href={`/render/${websiteId}/${link.pageId}`}
+              className="relative text-xs uppercase tracking-wider hover:opacity-80"
+              style={{ color: theme.secondary }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* ACTION */}
+        <div className="flex items-center gap-3">
+          <NavbarSearch theme={theme} />
+          <Button
+            size="sm"
+            variant="outline"
+            style={{
+              borderColor: theme.accent,
+              color: theme.accent,
+            }}
+          >
+            Login
+          </Button>
+        </div>
+      </div>
+    </nav>
+  )
+}
+
+
+  /* ===================================================== */
+/* VARIANT 3 – Centered Logo / Glassmorphism */
+/* ===================================================== */
+if (config.layout === "variant-3") {
+  return (
+    <nav
+      className="sticky top-4 z-50 mx-auto max-w-6xl rounded-2xl border backdrop-blur-md"
+      style={{
+        backgroundColor: `${theme.primary}cc`,
+        fontFamily: font.heading,
+      }}
+    >
+      <div className="flex h-16 items-center justify-between px-6">
+        {/* LEFT LINKS */}
+        <div className="hidden md:flex gap-6">
+          {config.links?.slice(0, Math.ceil(config.links.length / 2)).map((link, i) => (
+            <Link
+              key={i}
+              href={`/render/${websiteId}/${link.pageId}`}
+              className="text-sm font-medium hover:opacity-80"
+              style={{ color: theme.secondary }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* LOGO */}
+        <div className="flex items-center gap-2">
+          {config.logo ? (
+            <Image src={config.logo} width={42} height={42} alt="Logo" />
+          ) : (
+            <span
+              className="text-lg font-bold"
+              style={{ color: theme.secondary }}
+            >
+              {config.brandName || "Brand"}
+            </span>
+          )}
+        </div>
+
+        {/* RIGHT LINKS */}
+        <div className="hidden md:flex gap-6">
+          {config.links?.slice(Math.ceil(config.links.length / 2)).map((link, i) => (
+            <Link
+              key={i}
+              href={`/render/${websiteId}/${link.pageId}`}
+              className="text-sm font-medium hover:opacity-80"
+              style={{ color: theme.secondary }}
+            >
+              {link.label}
+            </Link>
+          ))}
+        </div>
+
+        {/* MOBILE */}
+        <Button
+          size="icon"
+          className="md:hidden"
+          style={{ backgroundColor: theme.accent }}
+          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        >
+          <Menu />
+        </Button>
+      </div>
+    </nav>
+  )
+}
+
+
   /* ===================================================== */
   /* VARIANT 2 – Modern / CTA Navbar */
   /* ===================================================== */

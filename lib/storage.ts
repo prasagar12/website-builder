@@ -63,20 +63,17 @@ export class StorageManager {
 
     return website.pages.find((p) => p.id === pageId) || null
   }
-
   // Save a page
   static savePage(websiteId: string, page: Page): void {
     const website = this.getWebsite(websiteId)
     if (!website) return
 
     const pageIndex = website.pages.findIndex((p) => p.id === page.id)
-
     if (pageIndex >= 0) {
       website.pages[pageIndex] = page
     } else {
       website.pages.push(page)
     }
-
     this.saveWebsite(website)
   }
 
@@ -84,7 +81,6 @@ export class StorageManager {
   static updatePageLayout(websiteId: string, pageId: string, layout: LayoutBlock[]): void {
     const page = this.getPage(websiteId, pageId)
     if (!page) return
-
     page.layout = layout
     this.savePage(websiteId, page)
   }

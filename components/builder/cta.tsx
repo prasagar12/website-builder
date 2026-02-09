@@ -33,7 +33,7 @@ export function CTA({
   if (config.layout === "variant-2") {
     return (
       <section
-        className="py-16"
+        className="py-16 border "
         style={{ backgroundColor: theme.secondary }}
       >
         <div className="container mx-auto px-4">
